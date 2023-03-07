@@ -1,5 +1,5 @@
 import React from "react";
-import { ItemType } from "../api/Item.type";
+import { ItemType } from "../types/Item.type";
 import {
   Modal as ModalUI,
   ModalOverlay,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import Item from "../components/Item";
-import { ItemType } from "../api/Item.type";
+import { ItemType } from "../types/Item.type";
 import { Grid } from "@chakra-ui/react";
 
 const MainPage = () => {
