@@ -8,7 +8,13 @@
   "arrowParens": "always",
   "bracketSpacing": true,
   "bracketSameLine": false,
-  "importOrder": ["^@utils/(.*)$", "^@components/(.*)$", "^@styles/(.*)$", "^[./]"],
+  "importOrder": [
+    "^@utils/(.*)$",
+    "^@pages/(.*)$",
+    "^@components/(.*)$",
+    "^@styles/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }

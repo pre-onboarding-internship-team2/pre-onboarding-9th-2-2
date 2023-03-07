@@ -1,7 +1,5 @@
-import Main from '@components/Main';
-
 function App() {
-  return <Main />;
+  return null;
 }
 
 export default App;

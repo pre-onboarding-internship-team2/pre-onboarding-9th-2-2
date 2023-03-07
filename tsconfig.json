@@ -15,12 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@src/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*,"]
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@styles/*": ["styles/*"],
+      "@pages/*": ["pages/*"]
     }
   },
   "include": ["src"],
