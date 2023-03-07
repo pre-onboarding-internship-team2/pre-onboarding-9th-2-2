@@ -1,8 +1,13 @@
+import { loadTravelItems } from "@/lib/loadTravelItems";
+import { TravelItem } from "@/types/travelItem.type";
+import { Link } from "@chakra-ui/react";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import NextLink from "next/link";
-import { Link } from "@chakra-ui/react";
 
-export default function Main() {
+const Main = ({
+  travelItems,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>
@@ -15,7 +20,22 @@ export default function Main() {
         <Link as={NextLink} href="/reservations">
           장바구니
         </Link>
+        {JSON.stringify(travelItems)}
       </main>
     </>
   );
-}
+};
+
+export default Main;
+
+export const getStaticProps: GetStaticProps<{
+  travelItems: TravelItem[];
+}> = async (context) => {
+  const travelItems = await loadTravelItems();
+
+  return {
+    props: {
+      travelItems,
+    },
+  };
+};
