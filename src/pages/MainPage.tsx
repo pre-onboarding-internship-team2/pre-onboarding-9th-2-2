@@ -3,6 +3,7 @@ import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import Item from "../components/Item";
 import { ItemType } from "../api/Item.type";
+import { Grid } from "@chakra-ui/react";
 
 const MainPage = () => {
   const [items, setItems] = useState<ItemType[]>([]);
@@ -23,9 +24,11 @@ const MainPage = () => {
   return (
     <PageLayout>
       <h2>MainPage</h2>
-      {items?.map((item) => (
-        <Item key={item.idx} item={item} />
-      ))}
+      <Grid templateColumns="repeat(2, 1fr)" gap={8}>
+        {items?.map((item) => (
+          <Item key={item.idx} item={item} />
+        ))}
+      </Grid>
     </PageLayout>
   );
 };
