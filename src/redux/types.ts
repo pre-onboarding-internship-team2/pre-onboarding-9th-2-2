@@ -1,8 +1,19 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
-import { RootState } from ".";
+import { store } from ".";
 
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunkDispatch = ThunkDispatch<RootState, any, AnyAction>;
+export interface dataState {
+  idx: string;
+  name: string;
+  mainImage: string;
+  description: string;
+  spaceCategory: string;
+  price: string;
+  maximumPurchases: string;
+  registrationDate: string;
+}
 
-export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export interface cartState extends dataState {
+  count: number;
+}

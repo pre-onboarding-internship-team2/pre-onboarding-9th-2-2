@@ -1,21 +1,11 @@
 import { createSlice, SerializedError } from "@reduxjs/toolkit";
-import fetchData from "./function/fetchData";
-
-interface initialState {
-  idx: string;
-  name: string;
-  mainImage: string;
-  description: string;
-  spaceCategory: string;
-  price: string;
-  maximumPurchases: string;
-  registrationDate: string;
-}
+import fetchData from "../function/fetchData";
+import { dataState } from "../types";
 
 export const dataSlice = createSlice({
   name: "data",
   initialState: {
-    data: [] as initialState[],
+    data: [] as dataState[],
     isLoading: false,
     error: null as null | SerializedError,
   },
