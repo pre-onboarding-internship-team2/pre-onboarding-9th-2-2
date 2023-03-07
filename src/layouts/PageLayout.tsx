@@ -5,7 +5,7 @@ import { Container } from "@chakra-ui/react";
 
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Container maxW="3xl">
+    <Container maxW="1200px">
       <NavBar />
       {children}
     </Container>

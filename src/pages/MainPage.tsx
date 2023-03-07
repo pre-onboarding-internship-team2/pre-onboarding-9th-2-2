@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PageLayout from "../layouts/PageLayout";
-import Item from "../components/Item";
+import Item from "../components/item/Item";
 import { ItemType } from "../types/Item.type";
 import { Grid } from "@chakra-ui/react";
 
@@ -17,8 +17,7 @@ const MainPage = () => {
 
   return (
     <PageLayout>
-      <h2>MainPage</h2>
-      <Grid templateColumns="repeat(2, 1fr)" gap={8}>
+      <Grid templateColumns="repeat(4, 1fr)" gap={10} py="50px">
         {item_list.map((item: ItemType) => (
           <Item key={item.idx} item={item} />
         ))}
