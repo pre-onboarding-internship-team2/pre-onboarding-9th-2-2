@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-interface UsersState {
+interface ItemsState {
   items: [];
   status: "pending" | "succeeded" | "failed";
 }
@@ -9,7 +9,7 @@ interface UsersState {
 const initialState = {
   items: [],
   status: "pending",
-} as UsersState;
+} as ItemsState;
 
 export const fetchItems = createAsyncThunk("items/fetchItems", async () => {
   const response = await axios({
