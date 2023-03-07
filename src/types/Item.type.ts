@@ -8,3 +8,16 @@ export type ItemType = {
   maximumPurchases: number;
   registrationDate: string;
 };
+
+export type savedItemType = {
+  idx: number;
+  name: string;
+  price: number;
+  maximumPurchases: number;
+  quantity: number;
+};
+
+export type toSavedItemType = Pick<
+  ItemType,
+  "idx" | "name" | "price" | "maximumPurchases"
+>;

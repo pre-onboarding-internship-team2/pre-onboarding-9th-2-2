@@ -1,11 +1,18 @@
 import React from "react";
 import Modal from "./Modal";
-import { ItemType } from "../types/Item.type";
+import { ItemType, toSavedItemType } from "../types/Item.type";
 import { formatCurrency } from "../utils/formatCurrency";
 import { Image, Button, GridItem, Box, useDisclosure } from "@chakra-ui/react";
+import { useAppDispatch } from "../hooks/useRedux";
+import { addToRV } from "../store/reservation/reservationSlice";
 
 const Item = ({ item }: { item: ItemType }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useAppDispatch();
+
+  const handleAddToRV = (item: toSavedItemType) => {
+    dispatch(addToRV(item));
+  };
 
   return (
     <GridItem>
@@ -19,7 +26,14 @@ const Item = ({ item }: { item: ItemType }) => {
         <p>{item.spaceCategory}</p>
       </div>
 
-      <Button colorScheme="blue">예약하기</Button>
+      <Button
+        colorScheme="blue"
+        onClick={() => {
+          handleAddToRV(item);
+        }}
+      >
+        예약하기
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose} targetItem={item} />
     </GridItem>
   );
