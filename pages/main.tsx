@@ -1,6 +1,7 @@
+import TravelItemList from "@/components/TravelItemList";
 import { loadTravelItems } from "@/lib/loadTravelItems";
 import { TravelItem } from "@/types/travelItem.type";
-import { Link } from "@chakra-ui/react";
+import { Container, Link } from "@chakra-ui/react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import NextLink from "next/link";
@@ -15,13 +16,13 @@ const Main = ({
         <meta name="description" content="여행 상품 목록 페이지" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main>
-        여행 상품 목록
+      <Container as="main" maxW="container.lg" py={4}>
+        <TravelItemList travelItems={travelItems} />
+
         <Link as={NextLink} href="/reservations">
           장바구니
         </Link>
-        {JSON.stringify(travelItems)}
-      </main>
+      </Container>
     </>
   );
 };
