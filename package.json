@@ -18,8 +18,11 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.5"
+<<<<<<< HEAD
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.7.0"
+=======
+>>>>>>> Initial commit from Create Next App
   }
 }
