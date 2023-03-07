@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hook/redux.hook";
 import { RootState } from "../redux/types";
 import fetchData from "../redux/function/fetchData";
+import { ADD } from "../redux/slice/cartSlice";
 import { Button, useDisclosure } from "@chakra-ui/react";
 import { Flex, Box, Image, Text, Badge } from "@chakra-ui/react";
 import {
@@ -14,20 +15,26 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { dataState } from "../redux/types";
+import { useDispatch } from "react-redux";
 
 const MainPage = () => {
   const [selected, setSelected] = useState<dataState>();
-  const dispatch = useAppDispatch();
+  const thunkDispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const { data, isLoading, error } = useAppSelector((state: RootState) => {
     return state.data;
+  });
+
+  const { cart } = useAppSelector((state: RootState) => {
+    return state.cart;
   });
 
   // chakraUI handle modal hook
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+    thunkDispatch(fetchData());
+  }, [thunkDispatch]);
 
   return (
     <Box minH="100vh">
@@ -80,6 +87,7 @@ const MainPage = () => {
               <Text fontSize="sm">₩ {product.price}</Text>
               <Box alignSelf="flex-end">
                 <Button
+                  onClick={() => dispatch(ADD(product))}
                   borderLeftRadius="full"
                   borderRightRadius="full"
                   minW="20"
