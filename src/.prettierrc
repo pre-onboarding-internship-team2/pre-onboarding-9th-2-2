@@ -9,10 +9,10 @@
   "bracketSpacing": true,
   "bracketSameLine": false,
   "importOrder": [
-    "^@assets/(.*)$",
     "^@utils/(.*)$",
     "^@pages/(.*)$",
     "^@components/(.*)$",
+    "^@reducers/(.*)$",
     "^@styles/(.*)$",
     "^[./]"
   ],

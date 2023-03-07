@@ -21,7 +21,7 @@
       "@utils/*": ["utils/*"],
       "@styles/*": ["styles/*"],
       "@pages/*": ["pages/*"],
-      "@assets/*": ["assets/*"]
+      "@reducers/*": ["reducers/*"]
     }
   },
   "include": ["src"],
