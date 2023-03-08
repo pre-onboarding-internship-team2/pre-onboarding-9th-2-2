@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import TravelItemCard from "./TravelItemCard";
 
-export function TravelItem({ travelItem }: { travelItem: TravelItem }) {
+function TravelItem({ travelItem }: { travelItem: TravelItem }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -45,3 +45,5 @@ export function TravelItem({ travelItem }: { travelItem: TravelItem }) {
     </>
   );
 }
+
+export default TravelItem;

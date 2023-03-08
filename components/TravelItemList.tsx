@@ -1,6 +1,6 @@
 import { TravelItem } from "@/types/travelItem.type";
 import { SimpleGrid, Text } from "@chakra-ui/react";
-import { TravelItem as TravelItemComponent } from "./TravelItem";
+import TravelItemComponent from "./TravelItem";
 
 export default function TravelItemList({
   travelItems,

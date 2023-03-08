@@ -1,8 +1,6 @@
-import { useReservationsChange } from "@/contexts/Reservations.context";
 import formatter from "@/lib/valueFormatter";
 import { TravelItem } from "@/types/travelItem.type";
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -11,10 +9,9 @@ import {
   Stack,
   Tag,
   Text,
-  useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { MouseEventHandler, useCallback } from "react";
+import ReserveButton from "./ReserveButton";
 
 interface TravelItemCardProps extends Partial<CardProps> {
   travelItem: TravelItem;
@@ -27,29 +24,6 @@ export default function TravelItemCard({
   detail = false,
   ...rest
 }: TravelItemCardProps) {
-  const { add: addToReservationList, checkExist } = useReservationsChange();
-  const toast = useToast();
-
-  const handleReservationButton: MouseEventHandler<HTMLButtonElement> =
-    useCallback(
-      (e) => {
-        e.stopPropagation();
-        const hasSameReservation = checkExist(travelItem);
-        if (hasSameReservation) {
-          toast({
-            title: "동일한 상품이 장바구니에 담겨 있습니다",
-            status: "warning",
-          });
-          return;
-        }
-        addToReservationList(travelItem);
-        toast({
-          title: `'${travelItem.name}'을 장바구니에 담았습니다`,
-          status: "success",
-        });
-      },
-      [addToReservationList, checkExist, toast, travelItem]
-    );
   return (
     <Card {...rest}>
       <CardBody>
@@ -91,13 +65,7 @@ export default function TravelItemCard({
         alignItems="center"
       >
         <Text fontSize="lg">{formatter.price(travelItem.price)} 원</Text>
-        <Button
-          variant="solid"
-          colorScheme="red"
-          onClick={handleReservationButton}
-        >
-          예약하기
-        </Button>
+        <ReserveButton travelItem={travelItem} />
       </CardFooter>
     </Card>
   );
