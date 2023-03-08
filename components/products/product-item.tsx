@@ -1,12 +1,14 @@
-import { ProductType } from "@/types/product-type";
+import React from "react";
 import Image from "next/image";
+import { ProductType } from "@/types/product-type";
 import classes from "./product-item.module.css";
 
 interface ProductItemProps {
   product: ProductType;
+  showModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ product, showModal }: ProductItemProps) => {
   return (
     <li className={classes.product__item}>
       <Image
@@ -19,7 +21,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
       <span>{product.idx}</span>
       <span>{product.price}</span>
       <span>{product.spaceCategory}</span>
-      <button type="button" id={String(product.idx)}>
+      <button type="button" id={String(product.idx)} onClick={showModal}>
         더보기
       </button>
       <button>예약</button>
@@ -27,4 +29,4 @@ const ProductItem = ({ product }: ProductItemProps) => {
   );
 };
 
-export default ProductItem;
+export default React.memo(ProductItem);
