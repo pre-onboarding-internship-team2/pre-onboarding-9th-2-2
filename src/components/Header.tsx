@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from 'store/hooks';
 
 function Header() {
   // const { totalQuant } = useAppSelector((state) => state.shoppingReducer);

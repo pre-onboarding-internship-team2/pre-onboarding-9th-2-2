@@ -1,3 +1,5 @@
+import mockData from '../mock_data.json';
+
 export interface IProduct {
   idx: number;
   name: string;
@@ -27,3 +29,5 @@ export type CartActionType = {
   type: ActionsTypes;
   payload: ICart;
 };
+
+export const shoppingList: IProduct[] = mockData.travelInfo;
