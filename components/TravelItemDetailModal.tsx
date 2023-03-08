@@ -16,14 +16,13 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 
-// TODO : modal 오픈시 레이아웃 움직임 수정
 export function TravelItemDetailModal({
   isOpen,
   onClose,
   travelItem,
 }: { travelItem: TravelItem } & Pick<ModalProps, "isOpen" | "onClose">) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} preserveScrollBarGap>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{travelItem.name}</ModalHeader>
