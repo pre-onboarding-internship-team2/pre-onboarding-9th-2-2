@@ -1,13 +1,34 @@
+import ShareSelect from "@/components/common/share-select";
 import ProductsList from "@/components/products/products-list";
+import { categoryOptions, priceOptions } from "@/helpers/options";
 import { ProductType } from "@/types/product-type";
 import { NextPage } from "next";
+import { useState } from "react";
 
 interface MainPageProps {
   products: ProductType[];
 }
 
 const MainPage: NextPage<MainPageProps> = ({ products }) => {
-  return <ProductsList products={products} />;
+  const [priceOption, setPriceOption] = useState("");
+  const [categoryOption, setCategoryOption] = useState("");
+  return (
+    <>
+      <ShareSelect
+        value={priceOption}
+        setValue={setPriceOption}
+        options={priceOptions}
+        placeholder="가격"
+      />
+      <ShareSelect
+        value={categoryOption}
+        setValue={setCategoryOption}
+        options={categoryOptions}
+        placeholder="카테고리"
+      />
+      <ProductsList products={products} />
+    </>
+  );
 };
 
 export default MainPage;
