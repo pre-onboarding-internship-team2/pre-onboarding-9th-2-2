@@ -58,10 +58,10 @@ export default function TravelItemCard({
         </Stack>
       </CardBody>
       <CardFooter
-        flexDirection={{ base: "column", md: "row" }}
+        flexDirection={detail ? "row" : { base: "column", md: "row" }}
+        pt={detail ? 4 : 0}
         justifyContent="space-between"
         alignItems="center"
-        pt={0}
       >
         <Text fontSize="lg">{travelItem.price.toLocaleString()} 원</Text>
         <Button
