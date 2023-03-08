@@ -1,6 +1,11 @@
 import React from 'react';
-import { Container } from '@chakra-ui/react';
+import { ProductProvider } from 'context/ProductContext';
+import ProductList from 'components/product/ProductList';
 
 export default function Main() {
-  return <>메인페이지</>;
+  return (
+    <ProductProvider>
+      <ProductList />
+    </ProductProvider>
+  );
 }
