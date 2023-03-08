@@ -1,8 +1,10 @@
 import Header from "@/components/Header";
 import TravelItemList from "@/components/TravelItemList";
+import { FilterProvider } from "@/contexts/Filter.context";
+import { TravelItemsProvider } from "@/contexts/TravelItems.context";
 import { loadTravelItems } from "@/lib/loadTravelItems";
 import { TravelItem } from "@/types/travelItem.type";
-import { Box, Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
@@ -17,10 +19,12 @@ const Main = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Box as="main">
-        <Header />
-        <Container maxW="container.lg" py={4}>
-          <TravelItemList travelItems={travelItems} />
-        </Container>
+        <TravelItemsProvider travelItems={travelItems}>
+          <FilterProvider>
+            <Header />
+            <TravelItemList />
+          </FilterProvider>
+        </TravelItemsProvider>
       </Box>
     </>
   );
