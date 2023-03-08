@@ -1,7 +1,9 @@
 # 2주차 과제
+
 여행 상품 리스트를 보고 장바구니에 저장할 수 있는 사이트 구현
 
 ## 팀원 구성표
+
 <table>
   <tr>
     <td align="center">
@@ -76,3 +78,9 @@
 | fix      | 에러, 버그 수정  |
 | docs     | 문서수정         |
 | chores   | 기타 수정사항    |
+
+## 사용 라이브러리
+
+react-router-dom version 6
+react-icons
+redux

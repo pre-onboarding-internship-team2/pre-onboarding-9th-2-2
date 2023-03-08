@@ -5,10 +5,10 @@ import TravelProduct from '@components/TravelProduct';
 
 function Main() {
   return (
-    <Container centerContent>
+    <>
       <Header />
       <TravelProduct />
-    </Container>
+    </>
   );
 }
 
