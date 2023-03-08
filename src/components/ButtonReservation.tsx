@@ -57,7 +57,8 @@ export default function ButtonReservation({ product }: { product: Product }) {
     <>
       {!isReserved ? (
         <Button
-          variant="solid"
+          variant="outline"
+          colorScheme={"blue"}
           width={"100%"}
           onClick={() => {
             handleReserve();
