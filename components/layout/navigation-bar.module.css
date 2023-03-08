@@ -1,0 +1,23 @@
+.navigation__header {
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: cadetblue;
+  min-height: 3rem;
+}
+
+.navigation__nav {
+  float: right;
+  transform: translateY(50%);
+}
+
+.navigation__nav a {
+  color: #fff;
+  text-decoration-line: none;
+}
+
+.navigation__nav a:not(:last-child) {
+  margin-right: 20px;
+}

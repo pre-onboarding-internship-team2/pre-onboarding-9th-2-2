@@ -9,11 +9,18 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product, showModal }: ProductItemProps) => {
+  const addToCart = async () => {
+    await fetch(`/api/reservations`, {
+      method: "POST",
+      body: JSON.stringify(product),
+    });
+  };
+
   return (
     <li className={classes.product__item}>
       <Image
         src={product.mainImage}
-        alt={product.description}
+        alt={product.description as string}
         width={300}
         height={300}
       />
@@ -24,7 +31,7 @@ const ProductItem = ({ product, showModal }: ProductItemProps) => {
       <button type="button" id={String(product.idx)} onClick={showModal}>
         더보기
       </button>
-      <button>예약</button>
+      <button onClick={addToCart}>예약</button>
     </li>
   );
 };

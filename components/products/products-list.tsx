@@ -34,7 +34,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
         <Modal closeModal={closeModalHandler}>
           <Image
             src={matchedProduct.mainImage}
-            alt={matchedProduct.description}
+            alt={matchedProduct.description as string}
             width={200}
             height={200}
           />
