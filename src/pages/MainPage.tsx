@@ -8,8 +8,15 @@ import { ADD } from "../redux/slice/cartSlice";
 import { Button, useDisclosure } from "@chakra-ui/react";
 import { Flex, Box, Image, Text, Badge } from "@chakra-ui/react";
 import ModalBox from "../components/ModalBox";
+import FilterBox from "../components/FilterBox";
 
 const MainPage = () => {
+  const { data, status, error } = useAppSelector((state: RootState) => {
+    return state.data;
+  });
+  const thunkDispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const [products, setProducts] = useState<dataState[]>(data);
   const [selected, setSelected] = useState<dataState>({
     idx: "",
     description: "",
@@ -20,11 +27,6 @@ const MainPage = () => {
     name: "",
     registrationDate: "",
   });
-  const thunkDispatch = useAppDispatch();
-  const dispatch = useDispatch();
-  const { data, isLoading, error } = useAppSelector((state: RootState) => {
-    return state.data;
-  });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -32,10 +34,17 @@ const MainPage = () => {
     thunkDispatch(fetchData());
   }, [thunkDispatch]);
 
+  useEffect(() => {
+    if (status === "fulfilled") {
+      setProducts(data);
+    }
+  }, [status]);
+
   return (
     <Box>
+      <FilterBox data={data} setProducts={setProducts} />
       <Flex flexWrap="wrap" justify="center" align="center">
-        {data.map((product: dataState) => (
+        {products.map((product: dataState) => (
           <Box
             key={product.idx}
             onClick={(event: React.MouseEvent) => {

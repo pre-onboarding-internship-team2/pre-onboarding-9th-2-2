@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import fetchData from "../redux/function/fetchData";
-import { useAppDispatch, useAppSelector } from "../redux/hook/redux.hook";
-import { dataState, RootState } from "../redux/types";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { dataState } from "../redux/types";
 import {
   Box,
   RangeSlider,
@@ -18,15 +16,16 @@ interface condition {
   categoryCondition: string[];
 }
 
-const SilderBar = () => {
-  const thunkDispatch = useAppDispatch();
+const SilderBar = ({
+  data,
+  setProducts,
+}: {
+  data: dataState[];
+  setProducts: Dispatch<SetStateAction<dataState[]>>;
+}) => {
   const [filterCondition, setFilterCondition] = useState<condition>({
     priceCondition: [0, 30000],
     categoryCondition: [],
-  });
-
-  const { data, isLoading, error } = useAppSelector((state: RootState) => {
-    return state.data;
   });
 
   const spaceCategoryArray = data.reduce(
@@ -35,10 +34,28 @@ const SilderBar = () => {
     []
   );
 
+  const dataFilter = (data: dataState[], condition: condition) => {
+    if (condition.categoryCondition.length === 0) {
+      const filteredData = data.filter(
+        (product: dataState) =>
+          product.price >= condition.priceCondition[0] &&
+          product.price <= condition.priceCondition[1]
+      );
+      return filteredData;
+    } else {
+      const filteredData = data.filter(
+        (product: dataState) =>
+          product.price >= condition.priceCondition[0] &&
+          product.price <= condition.priceCondition[1] &&
+          condition.categoryCondition.includes(product.spaceCategory)
+      );
+      return filteredData;
+    }
+  };
+
   useEffect(() => {
-    thunkDispatch(fetchData());
-    console.log(filterCondition);
-  }, [thunkDispatch, filterCondition]);
+    setProducts(dataFilter(data, filterCondition));
+  }, [filterCondition]);
 
   return (
     <>

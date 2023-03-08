@@ -6,20 +6,20 @@ export const dataSlice = createSlice({
   name: "data",
   initialState: {
     data: [] as dataState[],
-    isLoading: false,
+    status: "",
     error: null as null | SerializedError,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state) => {
-      state.isLoading = true;
+      state.status = "loading";
     }),
       builder.addCase(fetchData.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.status = "fulfilled";
         state.data = action.payload;
       }),
       builder.addCase(fetchData.rejected, (state, action) => {
-        state.isLoading = false;
+        state.status = "rejected";
         state.error = action.error;
       });
   },
