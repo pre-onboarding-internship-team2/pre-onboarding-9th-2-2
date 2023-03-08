@@ -1,11 +1,14 @@
 import { TravelItem } from "@/types/travelItem.type";
-import { promises as fs } from "fs";
-import path from "path";
+import axios from "axios";
 
 export async function loadTravelItems(): Promise<TravelItem[]> {
-  const filePath = path.join(process.cwd(), "mock_data.json");
-  const travelItems = await fs.readFile(filePath, "utf8");
-
-  if (!travelItems) return [];
-  return JSON.parse(travelItems);
+  const url = process.env.DATA_URL;
+  if (!url) return [];
+  try {
+    const response = await axios.get<TravelItem[]>(url);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
