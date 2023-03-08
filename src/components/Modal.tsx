@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 import { IProduct } from '../redux/cart.interface';
 
@@ -44,7 +45,9 @@ const TravelModal = ({
           <Button colorScheme="blue" mr={3} onClick={onClose}>
             닫기
           </Button>
-          <Button variant="ghost">Secondary Action</Button>
+          <Link to="/reservation">
+            <Button variant="ghost">예약</Button>
+          </Link>
         </ModalFooter>
       </ModalContent>
     </Modal>

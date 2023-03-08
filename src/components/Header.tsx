@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { RootState } from '../redux/store';
@@ -16,7 +16,7 @@ function Header() {
       </Heading>
 
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Link to="/cart">
+        <Link to="/reservation">
           <Button outline="none" boxShadow="none" rightIcon={<AiOutlineShoppingCart />}>
             My Cart
           </Button>

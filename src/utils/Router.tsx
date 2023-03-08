@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Main from '../pages/Main';
 import NotFound from '../pages/NotFound';
+import Reservation from '../pages/Reservation';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       },
     ],
     errorElement: <NotFound />,
+  },
+  {
+    path: '/reservation',
+    element: <Reservation />,
   },
 ]);
 

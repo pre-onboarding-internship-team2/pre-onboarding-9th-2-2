@@ -3,12 +3,11 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
   Flex,
   Heading,
-  Image,
   SimpleGrid,
   Stack,
+  Tag,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -38,31 +37,27 @@ function Product() {
             backgroundImage={`linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url("${item.mainImage}")`}
             key={index}
             w="300px"
-            onClick={() => {
-              onOpen();
-              setClicked(item);
-            }}
           >
-            <CardBody>
+            <CardBody
+              onClick={() => {
+                onOpen();
+                setClicked(item);
+              }}
+            >
               <Stack mt="6" spacing="3">
                 <Heading size="sm" color="white">
                   {item.name}
                 </Heading>
-                <Text color="gray.200" fontSize="xs" fontWeight="bold">
-                  {formatCurrency(item.price)}원
-                </Text>
-                <Text>카테고리: {item.spaceCategory}</Text>
+                <Tag size="sm" height="10px" backgroundColor="#FFF0E3" width="-webkit-fit-content">
+                  {item.spaceCategory}
+                </Tag>
               </Stack>
             </CardBody>
-            <CardFooter flexDir="column" flexGrow={1}>
-              <Button
-                position={'absolute'}
-                bottom="3"
-                right="3"
-                onClick={() => onClickHandle(item)}
-              >
-                예약
-              </Button>
+            <CardFooter flexGrow={1} justifyContent="space-between">
+              <Text color="gray.200" fontSize="xl" fontWeight="bold" alignContent="center">
+                ₩{formatCurrency(item.price)}
+              </Text>
+              <Button onClick={() => onClickHandle(item)}>예약</Button>
             </CardFooter>
             <Modal selected={clicked!} isOpen={isOpen} onClose={onClose} />
           </Card>
