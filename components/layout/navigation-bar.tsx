@@ -1,15 +1,49 @@
 import React from "react";
-import Link from "next/link";
-import classes from "./navigation-bar.module.css";
+import NextLink from "next/link";
+import { Box, Container, Link } from "@chakra-ui/react";
+
+const routes = [
+  {
+    href: "/main",
+    text: "상품페이지",
+  },
+  {
+    href: "/reservations",
+    text: "예약페이지",
+  },
+];
 
 const NavigationBar = () => {
   return (
-    <header className={classes.navigation__header}>
-      <nav className={classes.navigation__nav}>
-        <Link href="/main">상품 페이지</Link>
-        <Link href="/reservations">예약</Link>
-      </nav>
-    </header>
+    <Box
+      h="3rem"
+      pos="fixed"
+      top="0"
+      left="0"
+      right="0"
+      zIndex={2}
+      bg="cadetblue"
+    >
+      <Container
+        float="right"
+        transform="translateY(50%)"
+        display="flex"
+        justifyContent="end"
+      >
+        {routes.map((route, index) => (
+          <Link
+            key={index}
+            as={NextLink}
+            href={route.href}
+            color="white"
+            _hover={{ decoration: "none" }}
+            _first={{ marginRight: "20px" }}
+          >
+            {route.text}
+          </Link>
+        ))}
+      </Container>
+    </Box>
   );
 };
 

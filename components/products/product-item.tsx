@@ -1,11 +1,19 @@
 import React from "react";
 import Image from "next/image";
+import {
+  Flex,
+  ButtonGroup,
+  Button,
+  Stack,
+  Text,
+  Badge,
+  Box,
+} from "@chakra-ui/react";
 import { ProductType } from "@/types/product-type";
-import classes from "./product-item.module.css";
 
 interface ProductItemProps {
   product: ProductType;
-  showModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  showModal: (product: ProductType) => void;
 }
 
 const ProductItem = ({ product, showModal }: ProductItemProps) => {
@@ -17,22 +25,46 @@ const ProductItem = ({ product, showModal }: ProductItemProps) => {
   };
 
   return (
-    <li className={classes.product__item}>
-      <Image
-        src={product.mainImage}
-        alt={product.description as string}
-        width={300}
-        height={300}
-      />
-      <h3>{product.name}</h3>
-      <span>{product.idx}</span>
-      <span>{product.price}</span>
-      <span>{product.spaceCategory}</span>
-      <button type="button" id={String(product.idx)} onClick={showModal}>
-        더보기
-      </button>
-      <button onClick={addToCart}>예약</button>
-    </li>
+    <Flex
+      boxShadow="dark-lg"
+      direction="column"
+      align="center"
+      borderRadius={"10px"}
+    >
+      <Stack pos={"relative"} w="full" h="250px">
+        <Image
+          style={{
+            borderTopRightRadius: "10px",
+            borderTopLeftRadius: "10px",
+          }}
+          fill
+          src={product.mainImage}
+          alt={product.description as string}
+        />
+      </Stack>
+      <Stack>
+        <Badge color="white" maxW={"max-content"} bg="blue">
+          {product.spaceCategory}
+        </Badge>
+        <Box>
+          <Text align="center">{product.name}</Text>
+          <Text align="center">{product.idx}</Text>
+          <Text align="center">{product.price}</Text>
+        </Box>
+      </Stack>
+      <ButtonGroup>
+        <Button
+          type="button"
+          id={String(product.idx)}
+          onClick={() => showModal(product)}
+        >
+          더보기
+        </Button>
+        <Button type="button" onClick={addToCart}>
+          예약
+        </Button>
+      </ButtonGroup>
+    </Flex>
   );
 };
 

@@ -1,53 +1,64 @@
 import { useState } from "react";
+import Image from "next/image";
+import {
+  Flex,
+  SimpleGrid,
+  useDisclosure,
+  Stack,
+  Text,
+  Badge,
+  Box,
+} from "@chakra-ui/react";
 import { ProductType } from "@/types/product-type";
 import ProductItem from "./product-item";
-import classes from "./products-list.module.css";
-import Modal from "../modal/modal";
-import Image from "next/image";
+import ModalBox from "../modal/modal";
 
 interface ProductsListProps {
   products: ProductType[];
 }
 
 const ProductsList = ({ products }: ProductsListProps) => {
-  const [isModalShown, setIsModalShown] = useState(false);
-  const [matchedProduct, setMatchedProduct] = useState({} as ProductType);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [matchedProduct, setMatchedProduct] = useState<ProductType | null>(
+    null,
+  );
 
-  let specificProduct: any;
-
-  const showModalHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsModalShown(true);
-    specificProduct = products?.find(
-      (product) => product.idx === Number((e.target as HTMLElement).id),
-    );
-    setMatchedProduct(specificProduct);
-  };
-
-  const closeModalHandler = () => {
-    setIsModalShown(false);
-    setMatchedProduct({} as ProductType);
+  const showModalHandler = (product: ProductType) => {
+    onOpen();
+    setMatchedProduct(product);
   };
 
   return (
-    <section className={classes.products__wrapper}>
-      {isModalShown && (
-        <Modal closeModal={closeModalHandler}>
+    <Flex p="10px" justify="center">
+      <ModalBox
+        isOpen={isOpen}
+        onClose={onClose}
+        title={matchedProduct?.name as string}
+        buttonText={"취소하기"}
+      >
+        <Stack pos={"relative"} w="full" h="250px">
           <Image
-            src={matchedProduct.mainImage}
-            alt={matchedProduct.description as string}
-            width={200}
-            height={200}
+            fill
+            src={matchedProduct?.mainImage as string}
+            alt={matchedProduct?.name as string}
           />
-          <span>아이디 : {matchedProduct.idx}</span>
-          <span>이름 : {matchedProduct.name}</span>
-          <p>내용 : {matchedProduct.description}</p>
-          <span>위치 : {matchedProduct.spaceCategory}</span>
-          <span>비용 : {matchedProduct.price}</span>
-          <span>수수료 : {matchedProduct.maximumPurchases}</span>
-          <span>등록일 : {matchedProduct.registrationDate}</span>
-        </Modal>
-      )}
-      <ul className={classes.products__container}>
+        </Stack>
+        <Stack>
+          <Box>
+            <Badge mr="0.5rem" maxW="max-content" color="white" bg="green">
+              번호 : {matchedProduct?.idx}
+            </Badge>
+            <Badge maxW="max-content" color="white" bg="green">
+              카테고리 : {matchedProduct?.spaceCategory}
+            </Badge>
+          </Box>
+          <Text>이름 : {matchedProduct?.name}</Text>
+          <Text>가격 : {matchedProduct?.price}</Text>
+          <Text>최대 수량 : {matchedProduct?.maximumPurchases}</Text>
+          <Text>등록일 : {matchedProduct?.registrationDate}</Text>
+        </Stack>
+      </ModalBox>
+      <SimpleGrid p={5} gap={10} templateColumns="repeat(2, 1fr)">
         {products?.map((product) => (
           <ProductItem
             key={product.idx}
@@ -55,8 +66,8 @@ const ProductsList = ({ products }: ProductsListProps) => {
             showModal={showModalHandler}
           />
         ))}
-      </ul>
-    </section>
+      </SimpleGrid>
+    </Flex>
   );
 };
 

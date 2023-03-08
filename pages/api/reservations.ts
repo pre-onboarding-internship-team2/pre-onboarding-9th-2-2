@@ -13,7 +13,7 @@ export const extractCart = (filePath: string): ProductType[] => {
   return data;
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const products = req.body;
     const parsedProducts: ProductType = JSON.parse(products);
@@ -31,9 +31,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!existingData) {
       data.push(parsedProducts);
       fs.writeFileSync(filePath, JSON.stringify(data));
-      res.status(201).json({ message: "SUCCESS!", cart: parsedProducts });
+      return res
+        .status(201)
+        .json({ message: "SUCCESS!", cart: parsedProducts });
     }
-  } else {
+  }
+
+  if (req.method === "GET") {
     try {
       const filePath = buildCartPath();
       const data = extractCart(filePath);
@@ -41,6 +45,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } catch (error) {
       return res.status(500).send("Error revalidating");
     }
+  }
+
+  if (req.method === "DELETE") {
+    const id = req.body;
+    const { deletedId } = JSON.parse(id);
+
+    const filePath = buildCartPath();
+    const data = extractCart(filePath);
+
+    const filteredData = data.filter((item) => item.idx !== deletedId);
+    fs.writeFileSync(filePath, JSON.stringify(filteredData));
+    res.status(200).json({ cart: filteredData });
   }
 };
 

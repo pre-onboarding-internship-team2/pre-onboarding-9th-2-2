@@ -1,44 +1,45 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import classes from "./modal.module.css";
+import {
+  Portal,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+} from "@chakra-ui/react";
 
-export type BackdropProps = {
-  closeModal: () => void;
-};
-
-type ModalOverlayProps = {
+interface ModalBoxProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
   children: React.ReactNode;
-};
-
-type ModalProps = BackdropProps & ModalOverlayProps;
-
-const Backdrop = ({ closeModal }: BackdropProps) => {
-  return <div className={classes.backdrop} onClick={closeModal} />;
-};
-
-const ModalOverlay = ({ children }: ModalOverlayProps) => {
-  return <div className={classes.modal__overlay}>{children}</div>;
-};
-
-let portalElement: any;
-
-if (typeof window === "object") {
-  portalElement = document.getElementById("overlays") as HTMLElement;
+  buttonText: string;
 }
 
-const Modal = ({ children, closeModal }: ModalProps) => {
+const ModalBox = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  buttonText,
+}: ModalBoxProps) => {
   return (
-    <>
-      {ReactDOM.createPortal(
-        <Backdrop closeModal={closeModal} />,
-        portalElement,
-      )}
-      {ReactDOM.createPortal(
-        <ModalOverlay>{children}</ModalOverlay>,
-        portalElement,
-      )}
-    </>
+    <Portal>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{title}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{children}</ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>{buttonText}</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Portal>
   );
 };
 
-export default Modal;
+export default ModalBox;

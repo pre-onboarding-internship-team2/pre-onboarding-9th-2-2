@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.1",
     "@tanstack/react-query": "^4.26.1",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
