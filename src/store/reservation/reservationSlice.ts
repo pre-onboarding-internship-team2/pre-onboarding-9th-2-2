@@ -5,40 +5,37 @@ interface SavedItemsState {
   savedItems: savedItemType[];
   totalQuantity: number;
   totalAmount: number;
-  status: "succeeded" | "failed";
 }
 
 const initialState = {
   savedItems: [],
   totalQuantity: 0,
   totalAmount: 0,
-  status: "succeeded",
 } as SavedItemsState;
 
 export const reservationSlice = createSlice({
   name: "rvReducer",
   initialState,
   reducers: {
-    addToRV(state, action) {
+    addToReserVation(state, action) {
       const findItem = state.savedItems.find(
         (item) => item.idx === action.payload.idx
       );
 
       if (findItem?.quantity === action.payload.maximumPurchases) {
-        state.status = "failed";
+        findItem ? (findItem.available = false) : null;
         return;
       }
 
       if (findItem) {
         findItem.quantity += 1;
-        state.status = "succeeded";
+        findItem.available = true;
       } else {
-        const tempItem = { ...action.payload, quantity: 1 };
+        const tempItem = { ...action.payload, quantity: 1, available: true };
         state.savedItems.push(tempItem);
-        state.status = "succeeded";
       }
     },
   },
 });
 
-export const { addToRV } = reservationSlice.actions;
+export const { addToReserVation } = reservationSlice.actions;

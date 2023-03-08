@@ -15,6 +15,7 @@ export type savedItemType = {
   price: number;
   maximumPurchases: number;
   quantity: number;
+  available: boolean;
 };
 
 export type toSavedItemType = Pick<

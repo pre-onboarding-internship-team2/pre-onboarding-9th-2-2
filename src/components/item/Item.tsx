@@ -1,8 +1,6 @@
 import React from "react";
 import Modal from "./Modal";
 import { ItemType, toSavedItemType } from "../../types/Item.type";
-import { useAppDispatch } from "../../hooks/useRedux";
-import { addToRV } from "../../store/reservation/reservationSlice";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { Text, Image, GridItem, Box, useDisclosure } from "@chakra-ui/react";
 import AddButton from "./SaveItemButton";
