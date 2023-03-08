@@ -10,8 +10,8 @@ function Header() {
   const totalQuant = cartProducts.totalQuant;
 
   return (
-    <Flex flexDirection="row" justifyContent={'space-between'} alignItems={'center'}>
-      <Heading my={3} mb={10} color="brand.main">
+    <Flex mx={5} flexDirection="row" justifyContent={'space-between'} alignItems={'center'}>
+      <Heading my={3} mb={10} mx={3} color="brand.main">
         Like a LOCAL
       </Heading>
 
@@ -25,7 +25,7 @@ function Header() {
             alignItems="center"
             justifyContent="center"
             position="absolute"
-            right="30px"
+            right="50px"
             top="20px"
             width="20px"
             background="#383e47"

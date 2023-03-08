@@ -8,15 +8,17 @@ import {
   Heading,
   Image,
   SimpleGrid,
+  Stack,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { shoppingList } from '../redux/cart.interface';
 import { IProduct } from '../redux/cart.interface';
 import { add } from '../redux/slice/cartslice';
+import { formatCurrency } from '../utils/formatCurrency';
 import Modal from './Modal';
 
 function Product() {
@@ -29,27 +31,37 @@ function Product() {
   const [clicked, setClicked] = useState<IProduct>();
 
   return (
-    <Flex>
-      <SimpleGrid mb={20} spacing={4} templateColumns="repeat(4, minmax(300px, 1fr))">
+    <Flex justifyContent={'center'}>
+      <SimpleGrid mb={20} spacing={10} templateColumns="repeat(4, minmax(280px, 1fr))">
         {shoppingList.map((item, index) => (
-          <Card key={index}>
-            <Image objectFit="cover" src={item.mainImage} />
-            <CardHeader>
-              <Heading size="md">{item.name}</Heading>
-            </CardHeader>
+          <Card
+            backgroundImage={`linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url("${item.mainImage}")`}
+            key={index}
+            w="300px"
+            onClick={() => {
+              onOpen();
+              setClicked(item);
+            }}
+          >
             <CardBody>
-              <Text>가격: {item.price}원</Text>
-              <Text>카테고리: {item.spaceCategory}</Text>
+              <Stack mt="6" spacing="3">
+                <Heading size="sm" color="white">
+                  {item.name}
+                </Heading>
+                <Text color="gray.200" fontSize="xs" fontWeight="bold">
+                  {formatCurrency(item.price)}원
+                </Text>
+                <Text>카테고리: {item.spaceCategory}</Text>
+              </Stack>
             </CardBody>
             <CardFooter flexDir="column" flexGrow={1}>
-              <Button onClick={() => onClickHandle(item)}>예약</Button>
               <Button
-                onClick={() => {
-                  onOpen();
-                  setClicked(item);
-                }}
+                position={'absolute'}
+                bottom="3"
+                right="3"
+                onClick={() => onClickHandle(item)}
               >
-                여행 상품 정보
+                예약
               </Button>
             </CardFooter>
             <Modal selected={clicked!} isOpen={isOpen} onClose={onClose} />
