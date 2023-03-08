@@ -49,7 +49,9 @@ export default function Header() {
           <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}
+            color={'teal'}
+            fontSize="1.3em"
+            as="b"
           >
             Travle List
           </Text>
@@ -73,7 +75,7 @@ const DesktopNav = () => {
   const linkHoverColor = useColorModeValue('gray.800', 'white');
 
   return (
-    <Stack direction={'row'} spacing={4}>
+    <Stack direction={'row'} spacing={4} alignItems="center">
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
