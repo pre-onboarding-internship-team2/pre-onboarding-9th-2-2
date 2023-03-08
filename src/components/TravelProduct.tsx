@@ -11,18 +11,11 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
 import { useState } from 'react';
 import { CartState, IProduct } from 'store/reducers/shopping.interface';
 import { shoppingList } from 'store/reducers/shopping.interface';
+
+import TravelModal from './TravelModal';
 
 function TravelProduct() {
   const cartInitState: CartState = {
@@ -86,31 +79,7 @@ function TravelProduct() {
                 여행 상품 정보
               </Button>
             </CardFooter>
-            <Modal key={index} isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader fontSize="28px" fontWeight="800" marginBottom="2px" marginTop="30px">
-                  {clicked?.name}
-                </ModalHeader>
-                <ModalCloseButton />
-                <Image boxSize="300px" src={clicked?.mainImage} objectFit="cover" />
-                <ModalBody>
-                  <Text fontSize="20px" fontWeight="700">
-                    가격: {clicked?.price}원
-                  </Text>
-                  <Text fontSize="15px">예약 가능 수: {clicked?.maximumPurchases}</Text>
-                  <Text fontSize="15px">{clicked?.description}</Text>
-                  <Text fontSize="15px">예약 날짜: {clicked?.registrationDate}</Text>
-                </ModalBody>
-
-                <ModalFooter>
-                  <Button colorScheme="blue" mr={3} onClick={onClose}>
-                    닫기
-                  </Button>
-                  <Button variant="ghost">Secondary Action</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+            <TravelModal selected={clicked!} isOpen={isOpen} onClose={onClose} />
           </Card>
         ))}
       </SimpleGrid>
