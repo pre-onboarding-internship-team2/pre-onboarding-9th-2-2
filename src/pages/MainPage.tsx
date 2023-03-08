@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PageLayout from "../layouts/PageLayout";
 import Item from "../components/item/Item";
 import { ItemType } from "../types/Item.type";
 import { Grid } from "@chakra-ui/react";
@@ -16,13 +15,11 @@ const MainPage = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <Grid templateColumns="repeat(4, 1fr)" gap={10} py="50px">
-        {item_list.map((item: ItemType) => (
-          <Item key={item.idx} item={item} />
-        ))}
-      </Grid>
-    </PageLayout>
+    <Grid templateColumns="repeat(4, 1fr)" gap={10} py="50px">
+      {item_list.map((item: ItemType) => (
+        <Item key={item.idx} item={item} />
+      ))}
+    </Grid>
   );
 };
 
