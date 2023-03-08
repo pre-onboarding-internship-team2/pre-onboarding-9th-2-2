@@ -15,8 +15,8 @@ const MainPage = () => {
     description: "",
     mainImage: "",
     spaceCategory: "",
-    maximumPurchases: "",
-    price: "",
+    maximumPurchases: 0,
+    price: 0,
     name: "",
     registrationDate: "",
   });

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import ReservationsPage from "./pages/ReservationsPage";
 
 function App() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/main" element={<MainPage />} />
+        <Route path="/reservations" element={<ReservationsPage />} />
       </Routes>
     </div>
   );

@@ -9,8 +9,8 @@ export interface dataState {
   mainImage: string;
   description: string;
   spaceCategory: string;
-  price: string;
-  maximumPurchases: string;
+  price: number;
+  maximumPurchases: number;
   registrationDate: string;
 }
 
