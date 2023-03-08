@@ -66,35 +66,37 @@ export default function ProductItem({ product }: ProductProps) {
               },
             }}
           >
-            <Image rounded="lg" height="300" width="300" objectFit='cover' src={IMAGE} />
+            <Image rounded="lg" height="300" width="300" objectFit="cover" src={IMAGE} />
           </Box>
           <Box pt="5">
             <Flex justifyContent="space-between" alignItems="baseline">
               <Badge rounded="full" fontSize="1em" px="4">
                 {product.spaceCategory}
               </Badge>
-              <Text color='gray.500' rounded="full" px="2" fontSize="0.8em">
+              <Text color="gray.500" rounded="full" px="2" fontSize="0.8em">
                 상품번호 : {product.idx}
               </Text>
             </Flex>
-            <Flex mt="3" justifyContent="space-between" alignContent="center">
+            <Flex mt="5" justifyContent="space-between" alignContent="center">
               <Stack>
                 <Box fontSize="lg" fontWeight="semibold" as="h4" lineHeight="tight" pr="5">
                   {product.name}
                 </Box>
                 <Box fontSize="md">{PRICE} 원</Box>
               </Stack>
-              <Tooltip
-                label="상품예약"
-                bg="white"
-                placement='top'
-                color='gray.800'
-                fontSize='1em'
-              >
-                <chakra.a href='reservations' display='flex'>
-                  <Icon as={FiShoppingCart} h="8" w="8" alignSelf='center' />
-                </chakra.a>
-              </Tooltip>
+              <Box>
+                <Tooltip
+                  label="상품예약"
+                  bg="white"
+                  placement="bottom"
+                  color="gray.800"
+                  fontSize="1em"
+                >
+                  <chakra.a href="reservations" display="flex">
+                    <Icon as={FiShoppingCart} h="8" w="8" alignSelf="center" />
+                  </chakra.a>
+                </Tooltip>
+              </Box>
             </Flex>
           </Box>
         </Box>
