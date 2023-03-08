@@ -11,19 +11,17 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Navigate to="/main" />,
-        errorElement: <NotFoundPage />,
       },
       {
         path: "/main",
         element: <MainPage />,
-        errorElement: <NotFoundPage />,
       },
       {
         path: "/reservations",
         element: <ReservationPage />,
-        errorElement: <NotFoundPage />,
       },
     ],
+    errorElement: <NotFoundPage />,
   },
 ]);
 
