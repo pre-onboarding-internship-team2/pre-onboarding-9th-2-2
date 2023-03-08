@@ -1,19 +1,12 @@
+/** @jsxImportSource @emotion/react */
 import Head from "next/head";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Heading,
-  Image,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { Fragment } from "react";
 import { fetchGetProduct, Product } from "../services/product";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
+import ProductList from "@/components/ProductList";
+import { css } from "@emotion/react";
 
-export default function main({ products }: { products: Product[] }) {
+export default function MainPage({ products }: { products: Product[] }) {
   return (
     <>
       <Head>
@@ -22,41 +15,24 @@ export default function main({ products }: { products: Product[] }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        {products.map(({ idx, name, mainImage, spaceCategory, price }) => {
-          return (
-            <Fragment key={idx}>
-              <Card
-                direction={{ base: "column", sm: "row" }}
-                overflow="hidden"
-                variant="outline"
-              >
-                <Image
-                  objectFit="cover"
-                  maxW={{ base: "100%", sm: "200px" }}
-                  src={mainImage}
-                  alt={name}
-                />
-
-                <Stack>
-                  <CardBody>
-                    <Heading size="md">{name}</Heading>
-
-                    <Text py="2">{spaceCategory}</Text>
-                    <Text py="2">{price}</Text>
-                  </CardBody>
-
-                  <CardFooter>
-                    <Button variant="solid" colorScheme="blue">
-                      예약
-                    </Button>
-                  </CardFooter>
-                </Stack>
-              </Card>
-              ;
-            </Fragment>
-          );
-        })}
+      <main
+        css={css`
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100vw;
+        `}
+      >
+        <div
+          css={css`
+            width: 100%;
+            max-width: 1028px;
+            padding: 0 15px;
+          `}
+        >
+          <Link href={"reservations"}>장바구니</Link>
+          <ProductList products={products} />
+        </div>
       </main>
     </>
   );
