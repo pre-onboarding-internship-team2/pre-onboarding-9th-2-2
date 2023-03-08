@@ -21,19 +21,44 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useReducer } from 'react';
-import { IProduct } from 'store/reducers/shopping.interface';
-import { ActionsTypes } from 'store/reducers/shopping.interface';
-import { cartInitState, shoppingReducer } from 'store/reducers/shopping.reducer';
+import { CartState, IProduct } from 'store/reducers/shopping.interface';
 import { shoppingList } from 'store/reducers/shopping.reducer';
 
-function TravelProduct() {
-  const [state, cartDispatch] = useReducer(shoppingReducer, cartInitState);
-  console.log('TravelProduct render:', state);
-  const addToCart = async (id: number) => {
-    cartDispatch({ type: ActionsTypes.ADD_TO_CART, payload: id });
+function TestTravelProduct() {
+  const cartInitState: CartState = {
+    cart: [],
+    totalQuant: 0,
   };
+  const [cartList, setCartList] = useState<CartState>(cartInitState);
 
+  const onClickHandle = (item: IProduct) => {
+    const newItem = cartList?.cart.find((product) => product.product.idx == item.idx);
+    setCartList((oldCart) => {
+      if (newItem) {
+        console.log('exists');
+        const itemIndex = cartList?.cart.findIndex((product) => product.product.idx == item.idx);
+        return {
+          ...oldCart,
+          cart: cartList?.cart.map((product, index) => ({
+            ...product,
+            count: product.count + (itemIndex === index ? 1 : 0),
+          })),
+          totalQuant: cartList?.totalQuant + 1,
+        };
+      } else {
+        return {
+          cart: [
+            ...oldCart.cart,
+            {
+              count: 1,
+              product: item,
+            },
+          ],
+          totalQuant: cartList?.totalQuant + 1,
+        };
+      }
+    });
+  };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [clicked, setClicked] = useState<IProduct>();
 
@@ -51,7 +76,7 @@ function TravelProduct() {
               <Text>카테고리: {item.spaceCategory}</Text>
             </CardBody>
             <CardFooter flexDir="column" flexGrow={1}>
-              <Button onClick={() => addToCart(item.idx)}>예약</Button>
+              <Button onClick={() => onClickHandle(item)}>예약</Button>
               <Button
                 onClick={() => {
                   onOpen();
@@ -93,4 +118,4 @@ function TravelProduct() {
   );
 }
 
-export default TravelProduct;
+export default TestTravelProduct;

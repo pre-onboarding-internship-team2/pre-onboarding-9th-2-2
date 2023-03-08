@@ -1,17 +1,17 @@
-import { Container, Heading } from '@chakra-ui/react';
-import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
-import { useReducer } from 'react';
+import { Box, Button, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { shoppingInitState, shoppingReducer } from 'store/reducers/shopping.reducer';
+import { useAppSelector } from 'store/hooks';
 
 function Header() {
-  const [state, cartDispatch] = useReducer(shoppingReducer, shoppingInitState);
-  const { totalQuant } = state;
+  // const { totalQuant } = useAppSelector((state) => state.shoppingReducer);
+  const totalQuant = 1;
+
+  console.log('here', totalQuant);
 
   return (
-    <Container flexDirection="row" centerContent justifyContent={'space-between'}>
-      <Heading my={10} mb={10} color="brand.main">
+    <Flex flexDirection="row" justifyContent={'space-between'} alignItems={'center'}>
+      <Heading my={3} mb={10} color="brand.main">
         Like a LOCAL
       </Heading>
 
@@ -25,8 +25,8 @@ function Header() {
             alignItems="center"
             justifyContent="center"
             position="absolute"
-            right="21px"
-            top="12px"
+            right="30px"
+            top="20px"
             width="20px"
             background="#383e47"
             borderRadius="100%"
@@ -38,7 +38,7 @@ function Header() {
           </Box>
         </Link>
       </Flex>
-    </Container>
+    </Flex>
   );
 }
 
