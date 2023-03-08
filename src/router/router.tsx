@@ -1,16 +1,24 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 
 import Main from 'pages/Main';
 import Reservation from 'pages/Reservation';
 
 export default function Router() {
-  return(
-    <Routes>
-      <Route path="/" element={<Navigate to="/main" />} />
-      <Route path="main" element={<Main />} />
-      <Route path="reservations" element={<Reservation />}/>
-    </Routes>
-  )
+  let element = useRoutes([
+    {
+      path: '/',
+      element: <Navigate to="/main" />,
+    },
+    {
+      path: '/main',
+      element: <Main />,
+    },
+    {
+      path: '/reservations',
+      element: <Reservation />,
+    },
+  ]);
+  return element;
 }
 
