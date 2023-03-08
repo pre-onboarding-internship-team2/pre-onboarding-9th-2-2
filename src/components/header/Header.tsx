@@ -53,7 +53,7 @@ export default function Header() {
             fontSize="1.3em"
             as="b"
           >
-            Travle List
+            Travel List
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
