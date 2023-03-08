@@ -27,24 +27,28 @@ export default function TravelItemCard({
   detail = false,
   ...rest
 }: TravelItemCardProps) {
-  const { add: addToReservationList } = useReservationsChange();
+  const { add: addToReservationList, checkExist } = useReservationsChange();
   const toast = useToast();
 
   const handleReservationButton: MouseEventHandler<HTMLButtonElement> =
     useCallback(
       (e) => {
         e.stopPropagation();
-        try {
-          addToReservationList(travelItem);
+        const hasSameReservation = checkExist(travelItem);
+        if (hasSameReservation) {
           toast({
-            title: `'${travelItem.name}'을 장바구니에 담았습니다`,
-            status: "success",
+            title: "동일한 상품이 장바구니에 담겨 있습니다",
+            status: "warning",
           });
-        } catch (error: any) {
-          toast({ title: error?.message, status: "warning" });
+          return;
         }
+        addToReservationList(travelItem);
+        toast({
+          title: `'${travelItem.name}'을 장바구니에 담았습니다`,
+          status: "success",
+        });
       },
-      [addToReservationList, toast, travelItem]
+      [addToReservationList, checkExist, toast, travelItem]
     );
   return (
     <Card {...rest}>

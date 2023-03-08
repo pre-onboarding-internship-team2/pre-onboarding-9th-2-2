@@ -8,6 +8,7 @@ interface ReservationContextType {
 interface ReservationChangeContextType {
   add(newItem: TravelItem): void;
   remove(idx: TravelItem["idx"]): void;
+  checkExist(newItem: TravelItem): boolean;
 }
 
 const ReservationContext = createContext<ReservationContextType | null>(null);
@@ -42,18 +43,17 @@ export function ReservationsProvider({
 }) {
   const [reservations, setReservations] = useState<TravelItem[]>([]);
 
-  const add = useCallback(
+  const checkExist = useCallback(
     (newItem: TravelItem) => {
-      const existReservation = reservations.find(
-        (item) => item.idx === newItem.idx
-      );
-      if (existReservation) {
-        throw new Error("이미 예약한 상품입니다.");
-      }
-      setReservations((prevReservations) => [...prevReservations, newItem]);
+      const exist = reservations.find((item) => item.idx === newItem.idx);
+      return !!exist;
     },
     [reservations]
   );
+
+  const add = useCallback((newItem: TravelItem) => {
+    setReservations((prevReservations) => [...prevReservations, newItem]);
+  }, []);
 
   const remove = useCallback((idx: TravelItem["idx"]) => {
     setReservations((prevReservations) =>
@@ -63,7 +63,7 @@ export function ReservationsProvider({
 
   return (
     <ReservationContext.Provider value={{ reservations }}>
-      <ReservationsChangeContext.Provider value={{ add, remove }}>
+      <ReservationsChangeContext.Provider value={{ add, remove, checkExist }}>
         {children}
       </ReservationsChangeContext.Provider>
     </ReservationContext.Provider>
