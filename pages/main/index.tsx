@@ -3,7 +3,7 @@ import ProductsList from "@/components/products/products-list";
 import { categoryOptions, priceOptions } from "@/helpers/options";
 import { ProductType } from "@/types/product-type";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface MainPageProps {
   products: ProductType[];
@@ -12,6 +12,40 @@ interface MainPageProps {
 const MainPage: NextPage<MainPageProps> = ({ products }) => {
   const [priceOption, setPriceOption] = useState("");
   const [categoryOption, setCategoryOption] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  const processedProducts = () => {
+    if (!priceOption) {
+      return filteredProducts;
+    } else {
+      const filteredData = products.reduce<ProductType[]>((acc, cur) => {
+        const priceCondition =
+          priceOption && priceOption === "10000이하"
+            ? cur.price <= 10000
+            : priceOption === "10000-20000"
+            ? cur.price > 10000 && cur.price <= 20000
+            : priceOption === "20000-30000"
+            ? cur.price > 20000 && cur.price <= 30000
+            : true;
+
+        const categoryCondition = categoryOption
+          ? cur.spaceCategory === categoryOption
+          : true;
+
+        if (priceCondition && categoryCondition) {
+          acc.push(cur);
+        }
+
+        return acc;
+      }, []);
+      setFilteredProducts(filteredData);
+    }
+  };
+
+  useEffect(() => {
+    processedProducts();
+  }, [priceOption, categoryOption]);
+
   return (
     <>
       <ShareSelect
@@ -26,7 +60,7 @@ const MainPage: NextPage<MainPageProps> = ({ products }) => {
         options={categoryOptions}
         placeholder="카테고리"
       />
-      <ProductsList products={products} />
+      <ProductsList products={filteredProducts} />
     </>
   );
 };
