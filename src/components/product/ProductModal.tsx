@@ -1,4 +1,6 @@
 import React from 'react';
+import { ProductType } from './PtoductItem.Type';
+
 import {
   Modal,
   ModalOverlay,
@@ -16,16 +18,17 @@ import {
   Flex,
   Badge,
 } from '@chakra-ui/react';
-import { ProductType } from './PtoductItem.Type';
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
   product: ProductType;
+  addProduct: () => void;
 }
 
-export default function ProductModal({ isOpen, onClose, product }: IProps) {
+export default function ProductModal({ isOpen, onClose, product, addProduct }: IProps) {
   const PRICE = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
   return (
     <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -41,7 +44,7 @@ export default function ProductModal({ isOpen, onClose, product }: IProps) {
               <Badge rounded="full" fontSize="1em" px="4" py="1">
                 {product.spaceCategory}
               </Badge>
-              <Text color='gray.500' rounded="full" fontSize="0.8em">
+              <Text color="gray.500" rounded="full" fontSize="0.8em">
                 상품번호 : {product.idx}
               </Text>
             </Flex>
@@ -79,9 +82,9 @@ export default function ProductModal({ isOpen, onClose, product }: IProps) {
         </ModalBody>
 
         <ModalFooter justifyContent="space-between">
-          <Text color='gray.500'>{product.registrationDate}</Text>
+          <Text color="gray.500">{product.registrationDate}</Text>
           <Box>
-            <Button colorScheme="teal" mr="3">
+            <Button colorScheme="teal" mr="3" onClick={addProduct}>
               예약하기
             </Button>
             <Button colorScheme="gray" onClick={onClose}>

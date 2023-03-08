@@ -1,4 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'store/store';
+import { addReservation } from 'store/modules/reservation.slice';
+import { ProductType } from './PtoductItem.Type';
 import {
   Box,
   Center,
@@ -7,14 +11,14 @@ import {
   Tooltip,
   Image,
   Flex,
-  chakra,
   Icon,
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
-import { ProductType } from './PtoductItem.Type';
+
 import ProductModal from './ProductModal';
 
 interface ProductProps {
@@ -23,13 +27,26 @@ interface ProductProps {
 
 export default function ProductItem({ product }: ProductProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+  const dispatch = useDispatch<AppDispatch>();
 
   const IMAGE = product.mainImage;
   const PRICE = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
+  const addProduct = () => {
+    dispatch(addReservation(product)).then(() => {
+      toast({
+        title: '예약되었습니다.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    });
+  };
+
   return (
     <>
-      <Center p="8" onClick={onOpen}>
+      <Center m="8" onClick={onOpen}>
         <Box
           role="group"
           p="6"
@@ -91,10 +108,19 @@ export default function ProductItem({ product }: ProductProps) {
                   placement="bottom"
                   color="gray.800"
                   fontSize="1em"
+                  borderRadius="full"
+                  border="1px"
+                  borderColor="gray.100"
                 >
-                  <chakra.a href="reservations" display="flex">
+                  <Box
+                    cursor="pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addProduct();
+                    }}
+                  >
                     <Icon as={FiShoppingCart} h="8" w="8" alignSelf="center" />
-                  </chakra.a>
+                  </Box>
                 </Tooltip>
               </Box>
             </Flex>
@@ -102,7 +128,7 @@ export default function ProductItem({ product }: ProductProps) {
         </Box>
       </Center>
 
-      <ProductModal isOpen={isOpen} onClose={onClose} product={product} />
+      <ProductModal isOpen={isOpen} onClose={onClose} product={product} addProduct={addProduct}/>
     </>
   );
 }
