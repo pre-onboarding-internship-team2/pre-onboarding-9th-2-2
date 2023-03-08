@@ -1,4 +1,4 @@
-import mockData from '../mock_data.json';
+import mockData from './mock_data.json';
 
 export interface IProduct {
   idx: number;
@@ -11,23 +11,13 @@ export interface IProduct {
   registrationDate: string;
 }
 
-export interface ICart {
-  product: IProduct;
+export interface ICart extends IProduct {
   count: number;
 }
 
 export type CartState = {
-  cart: ICart[];
+  cartProducts: ICart[];
   totalQuant: number;
-};
-
-// types of actions in the reducer
-export enum ActionsTypes {
-  ADD_TO_CART = 'ADD_TO_CART',
-}
-export type CartActionType = {
-  type: ActionsTypes;
-  payload: ICart;
 };
 
 export const shoppingList: IProduct[] = mockData.travelInfo;

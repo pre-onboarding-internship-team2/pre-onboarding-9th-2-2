@@ -1,10 +1,10 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 
-import router from '@utils/Router';
+import { store } from './redux/store';
+import router from './utils/Router';
 
 const theme = extendTheme({
   colors: {
@@ -15,7 +15,9 @@ const theme = extendTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <ChakraProvider theme={theme}>
-    <RouterProvider router={router} />
-  </ChakraProvider>
+  <Provider store={store}>
+    <ChakraProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </Provider>
 );

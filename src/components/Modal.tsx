@@ -10,7 +10,8 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { IProduct } from 'store/reducers/shopping.interface';
+
+import { IProduct } from '../redux/cart.interface';
 
 const TravelModal = ({
   selected,

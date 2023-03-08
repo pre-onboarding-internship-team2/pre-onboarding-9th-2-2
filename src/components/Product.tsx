@@ -12,45 +12,18 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { CartState, IProduct } from 'store/reducers/shopping.interface';
-import { shoppingList } from 'store/reducers/shopping.interface';
+import { useDispatch, useSelector } from 'react-redux';
 
-import TravelModal from './TravelModal';
+import { shoppingList } from '../redux/cart.interface';
+import { IProduct } from '../redux/cart.interface';
+import { add } from '../redux/slice/cartslice';
+import Modal from './Modal';
 
-function TravelProduct() {
-  const cartInitState: CartState = {
-    cart: [],
-    totalQuant: 0,
-  };
-  const [cartList, setCartList] = useState<CartState>(cartInitState);
+function Product() {
+  const dispatch = useDispatch();
 
   const onClickHandle = (item: IProduct) => {
-    const newItem = cartList?.cart.find((product) => product.product.idx == item.idx);
-    setCartList((oldCart) => {
-      if (newItem) {
-        console.log('exists');
-        const itemIndex = cartList?.cart.findIndex((product) => product.product.idx == item.idx);
-        return {
-          ...oldCart,
-          cart: cartList?.cart.map((product, index) => ({
-            ...product,
-            count: product.count + (itemIndex === index ? 1 : 0),
-          })),
-          totalQuant: cartList?.totalQuant + 1,
-        };
-      } else {
-        return {
-          cart: [
-            ...oldCart.cart,
-            {
-              count: 1,
-              product: item,
-            },
-          ],
-          totalQuant: cartList?.totalQuant + 1,
-        };
-      }
-    });
+    dispatch(add(item));
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [clicked, setClicked] = useState<IProduct>();
@@ -79,7 +52,7 @@ function TravelProduct() {
                 여행 상품 정보
               </Button>
             </CardFooter>
-            <TravelModal selected={clicked!} isOpen={isOpen} onClose={onClose} />
+            <Modal selected={clicked!} isOpen={isOpen} onClose={onClose} />
           </Card>
         ))}
       </SimpleGrid>
@@ -87,4 +60,4 @@ function TravelProduct() {
   );
 }
 
-export default TravelProduct;
+export default Product;
