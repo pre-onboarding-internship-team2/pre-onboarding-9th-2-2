@@ -1,24 +1,15 @@
-function padLeftZeroIfUnder10(value: number): string {
-  if (value < 10) {
-    return value.toString().padStart(2, "0");
-  }
-
-  return value.toString();
-}
-
 function price(priceValue: number): string {
-  return priceValue.toLocaleString();
+  return priceValue.toLocaleString("ko", {
+    style: "currency",
+    currency: "KRW",
+  });
 }
 
 function date(dateValue: string | Date): string {
-  const dateObject = new Date(dateValue);
-  const year = dateObject.getFullYear();
-  const month = dateObject.getMonth() + 1;
-  const date = dateObject.getDate();
-  const hour = dateObject.getHours();
-  const minute = padLeftZeroIfUnder10(dateObject.getMinutes());
-  const second = padLeftZeroIfUnder10(dateObject.getSeconds());
-  return `${year}년 ${month}월 ${date}일 ${hour}:${minute}:${second}`;
+  return new Date(dateValue).toLocaleString("ko", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }
 
 const formatter = {

@@ -64,7 +64,7 @@ export default function TravelItemCard({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text fontSize="lg">{formatter.price(travelItem.price)} 원</Text>
+        <Text fontSize="lg">{formatter.price(travelItem.price)}</Text>
         <ReserveButton travelItem={travelItem} />
       </CardFooter>
     </Card>
