@@ -1,3 +1,4 @@
+import formatter from "@/lib/valueFormatter";
 import { TravelItem } from "@/types/travelItem.type";
 import {
   Button,
@@ -41,7 +42,7 @@ export default function TravelItemCard({
           {detail && (
             <>
               <Text>{travelItem.description}</Text>
-              <Stack as="dl">
+              <Stack as="dl" color="grey">
                 <Stack direction="row">
                   <Text as="dt">구매개수 제한 :</Text>
                   <Text as="dt">{travelItem.maximumPurchases} 개</Text>
@@ -49,7 +50,7 @@ export default function TravelItemCard({
                 <Stack direction="row">
                   <Text as="dt">등록일자 : </Text>
                   <Text as="dt">
-                    {new Date(travelItem.registrationDate).toDateString()}
+                    {formatter.date(travelItem.registrationDate)}
                   </Text>
                 </Stack>
               </Stack>
@@ -63,7 +64,7 @@ export default function TravelItemCard({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text fontSize="lg">{travelItem.price.toLocaleString()} 원</Text>
+        <Text fontSize="lg">{formatter.price(travelItem.price)} 원</Text>
         <Button
           variant="solid"
           colorScheme="red"
