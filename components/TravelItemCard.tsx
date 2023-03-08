@@ -4,71 +4,77 @@ import {
   Card,
   CardBody,
   CardFooter,
+  CardProps,
   Heading,
   Stack,
-  Stat,
-  StatNumber,
   Tag,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import { TravelItemDetailModal } from "./TravelItemDetailModal";
+
+interface TravelItemCardProps extends Partial<CardProps> {
+  travelItem: TravelItem;
+  /** detail : true 일 경우 상세 정보 출력 */
+  detail?: boolean;
+}
 
 export default function TravelItemCard({
   travelItem,
-}: {
-  travelItem: TravelItem;
-}) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  detail = false,
+  ...rest
+}: TravelItemCardProps) {
   return (
-    <>
-      <Card
-        maxW="sm"
-        _hover={{
-          boxShadow: "2xl",
-          cursor: "pointer",
-          transition: "all 0.5s ease",
-        }}
-        onClick={onOpen}
-      >
-        <CardBody>
-          <Image
-            width={300}
-            height={300}
-            src={travelItem.mainImage}
-            alt={travelItem.name}
-          />
-          <Stack mt="6" spacing="3">
-            <Heading size="md">{travelItem.name}</Heading>
+    <Card {...rest}>
+      <CardBody>
+        <Image
+          width={300}
+          height={300}
+          src={travelItem.mainImage}
+          alt={travelItem.name}
+        />
+        <Stack mt={3} spacing={4}>
+          <Stack direction="row">
             <Text>{travelItem.idx}</Text>
             <Tag>{travelItem.spaceCategory}</Tag>
-            <Stat textAlign="right">
-              <StatNumber color="blue.600" fontSize="2xl">
-                {travelItem.price} 원
-              </StatNumber>
-            </Stat>
           </Stack>
-        </CardBody>
-        <CardFooter justifyContent="center">
-          <Button
-            variant="solid"
-            colorScheme="blue"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log(`${travelItem.name} reservation clicked`);
-            }}
-          >
-            예약하기
-          </Button>
-        </CardFooter>
-      </Card>
-
-      <TravelItemDetailModal
-        isOpen={isOpen}
-        onClose={onClose}
-        travelItem={travelItem}
-      />
-    </>
+          <Heading size="md">{travelItem.name}</Heading>
+          {detail && (
+            <>
+              <Text>{travelItem.description}</Text>
+              <Stack as="dl">
+                <Stack direction="row">
+                  <Text as="dt">구매개수 제한 :</Text>
+                  <Text as="dt">{travelItem.maximumPurchases} 개</Text>
+                </Stack>
+                <Stack direction="row">
+                  <Text as="dt">등록일자 : </Text>
+                  <Text as="dt">
+                    {new Date(travelItem.registrationDate).toDateString()}
+                  </Text>
+                </Stack>
+              </Stack>
+            </>
+          )}
+        </Stack>
+      </CardBody>
+      <CardFooter
+        flexDirection={{ base: "column", md: "row" }}
+        justifyContent="space-between"
+        alignItems="center"
+        pt={0}
+      >
+        <Text fontSize="lg">{travelItem.price.toLocaleString()} 원</Text>
+        <Button
+          variant="solid"
+          colorScheme="red"
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log(`${travelItem.name} reservation clicked`);
+          }}
+        >
+          예약하기
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

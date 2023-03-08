@@ -1,6 +1,6 @@
 import { TravelItem } from "@/types/travelItem.type";
 import { SimpleGrid, Text } from "@chakra-ui/react";
-import TravelItemCard from "./TravelItemCard";
+import { TravelItem as TravelItemComponent } from "./TravelItem";
 
 export default function TravelItemList({
   travelItems,
@@ -9,14 +9,17 @@ export default function TravelItemList({
 }) {
   return (
     <SimpleGrid
-      spacing={4}
-      templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+      spacing={{ base: 4, md: 8 }}
+      templateColumns={{
+        base: "1fr 1fr",
+        md: "repeat(auto-fill, minmax(300px, 1fr))",
+      }}
     >
       {!travelItems.length ? (
         <Text>여행 상품이 없습니다</Text>
       ) : (
         travelItems.map((travelItem) => (
-          <TravelItemCard travelItem={travelItem} key={travelItem.idx} />
+          <TravelItemComponent travelItem={travelItem} key={travelItem.idx} />
         ))
       )}
     </SimpleGrid>
