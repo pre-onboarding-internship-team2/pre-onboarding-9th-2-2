@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import "./App.css";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    navigate("/main");
+    if (location.pathname === "/") {
+      navigate("/main");
+    }
   }, []);
 
   return (

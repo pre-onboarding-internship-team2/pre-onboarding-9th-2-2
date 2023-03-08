@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useAppSelector, useAppDispatch } from "../redux/hook/redux.hook";
 import { RootState } from "../redux/types";
+import { dataState } from "../redux/types";
 import fetchData from "../redux/function/fetchData";
 import { ADD } from "../redux/slice/cartSlice";
 import { Button, useDisclosure } from "@chakra-ui/react";
@@ -14,8 +16,6 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { dataState } from "../redux/types";
-import { useDispatch } from "react-redux";
 
 const MainPage = () => {
   const [selected, setSelected] = useState<dataState>();
@@ -23,10 +23,6 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const { data, isLoading, error } = useAppSelector((state: RootState) => {
     return state.data;
-  });
-
-  const { cart } = useAppSelector((state: RootState) => {
-    return state.cart;
   });
 
   // chakraUI handle modal hook
@@ -141,6 +137,7 @@ const MainPage = () => {
                 marginX="1"
                 borderLeftRadius="full"
                 borderRightRadius="full"
+                onClick={() => dispatch(ADD(selected))}
               >
                 예약하기
               </Button>
