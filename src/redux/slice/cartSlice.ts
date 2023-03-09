@@ -21,7 +21,19 @@ export const cartSlice = createSlice({
         state.cart.push({ ...action.payload, count: 1 });
       }
     },
+    REMOVE: (state, action) => {
+      const findData = state.cart.find(
+        (product: cartState) => product.idx === action.payload.idx
+      );
+      if (findData?.count === 1) {
+        state.cart = state.cart.filter(
+          (product: cartState) => product.idx !== findData.idx
+        );
+      } else if (findData && findData.count > 1) {
+        findData.count -= 1;
+      }
+    },
   },
 });
 
-export const { ADD } = cartSlice.actions;
+export const { ADD, REMOVE } = cartSlice.actions;

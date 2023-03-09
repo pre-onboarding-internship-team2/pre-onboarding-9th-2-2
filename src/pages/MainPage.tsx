@@ -9,11 +9,16 @@ import { Button, useDisclosure } from "@chakra-ui/react";
 import { Flex, Box, Image, Text, Badge } from "@chakra-ui/react";
 import ModalBox from "../components/ModalBox";
 import FilterBox from "../components/FilterBox";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   const { data, status, error } = useAppSelector((state: RootState) => {
     return state.data;
   });
+  const { cart } = useAppSelector((state: RootState) => {
+    return state.cart;
+  });
+
   const thunkDispatch = useAppDispatch();
   const dispatch = useDispatch();
   const [products, setProducts] = useState<dataState[]>(data);
@@ -40,8 +45,15 @@ const MainPage = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+
   return (
     <Box>
+      <Button>
+        <Link to="/reservations">장바구니</Link>
+      </Button>
       <FilterBox data={data} setProducts={setProducts} />
       <Flex flexWrap="wrap" justify="center" align="center">
         {products.map((product: dataState) => (

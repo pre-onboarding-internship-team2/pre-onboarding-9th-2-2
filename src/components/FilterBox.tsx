@@ -16,7 +16,7 @@ interface condition {
   categoryCondition: string[];
 }
 
-const SilderBar = ({
+const FilterBox = ({
   data,
   setProducts,
 }: {
@@ -152,4 +152,4 @@ const SilderBar = ({
   );
 };
 
-export default SilderBar;
+export default FilterBox;
