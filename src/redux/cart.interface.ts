@@ -15,9 +15,4 @@ export interface ICart extends IProduct {
   count: number;
 }
 
-export type CartState = {
-  cartProducts: ICart[];
-  totalQuant: number;
-};
-
 export const shoppingList: IProduct[] = mockData.travelInfo;

@@ -1,13 +1,12 @@
 import { Box, Button, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { RootState } from '../redux/store';
+import { useAppSelector } from '../redux/hook/redux.hook';
 
 function Header() {
-  const cartProducts = useSelector((state: RootState) => state.cart);
-  const totalQuant = cartProducts.totalQuant;
+  const cartProducts = useAppSelector((state) => state.cart);
+  const totalQuant = 1;
 
   return (
     <Flex mx={5} flexDirection="row" justifyContent={'space-between'} alignItems={'center'}>

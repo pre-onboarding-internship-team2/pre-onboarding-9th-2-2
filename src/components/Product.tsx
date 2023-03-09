@@ -12,19 +12,19 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { shoppingList } from '../redux/cart.interface';
 import { IProduct } from '../redux/cart.interface';
-import { add } from '../redux/slice/cartslice';
+import { useAppDispatch } from '../redux/hook/redux.hook';
+import { increase } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
 import Modal from './Modal';
 
 function Product() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickHandle = (item: IProduct) => {
-    dispatch(add(item));
+    dispatch(increase(item));
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [clicked, setClicked] = useState<IProduct>();

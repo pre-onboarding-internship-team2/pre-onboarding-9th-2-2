@@ -3,19 +3,38 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Container,
   Flex,
   Heading,
   Image,
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 
-import { RootState } from '../redux/store';
+import { ICart, IProduct } from '../redux/cart.interface';
+import { useAppDispatch, useAppSelector } from '../redux/hook/redux.hook';
+import { decrease, increase, remove } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
 
 function Reservation() {
-  const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
+  const cartProducts = useAppSelector((state) => state.cart);
+
+  const dispatch = useAppDispatch();
+
+  const increaseProduct = (item: ICart) => {
+    dispatch(increase(item));
+  };
+
+  const decreaseProduct = (item: ICart) => {
+    if (item.count == 1) {
+      dispatch(remove(item.idx));
+    }
+    dispatch(decrease(item));
+  };
+
+  const deleteProduct = (id: number) => {
+    dispatch(remove(id));
+  };
 
   return (
     <Flex flexDir="column" justifyContent={'center'} alignItems={'center'} marginTop="10">
@@ -36,17 +55,22 @@ function Reservation() {
           />
           <Stack width="100%">
             <CardBody>
-              <Heading size="md">{item.name}</Heading>
+              <Flex flexDir="row" justifyContent="space-between" alignItems="center">
+                <Heading size="md">{item.name}</Heading>
+                <Button onClick={() => deleteProduct(item.idx)} colorScheme="teal" variant="ghost">
+                  X
+                </Button>
+              </Flex>
               <Text py="2">{item.description}</Text>
               <Text fontWeight="extrabold">{formatCurrency(item.count * item.price)}원</Text>
             </CardBody>
 
             <CardFooter justifyContent="center" alignItems="center">
-              <Button variant="solid" colorScheme="blue">
+              <Button onClick={() => decreaseProduct(item)} variant="solid" colorScheme="gray">
                 -
               </Button>
               <Text marginInline="8">{item.count}</Text>
-              <Button variant="solid" colorScheme="blue">
+              <Button onClick={() => increaseProduct(item)} variant="solid" colorScheme="gray">
                 +
               </Button>
             </CardFooter>
