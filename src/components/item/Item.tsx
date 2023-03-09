@@ -3,10 +3,12 @@ import Modal from "./Modal";
 import { ItemType } from "../../types/Item.type";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { Text, Image, GridItem, Box, useDisclosure } from "@chakra-ui/react";
-import AddButton from "./SaveItemButton";
+import { useAppSelector } from "../../hooks/useRedux";
+import ReservationButton from "./ReservationButton";
 
 const Item = ({ item }: { item: ItemType }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const savedItems = useAppSelector((state) => state.reservation.savedItems);
 
   return (
     <GridItem>
@@ -65,7 +67,8 @@ const Item = ({ item }: { item: ItemType }) => {
         </Text>
       </Box>
 
-      <AddButton item={item} />
+      <ReservationButton item={item} />
+
       <Modal isOpen={isOpen} onClose={onClose} targetItem={item} />
     </GridItem>
   );

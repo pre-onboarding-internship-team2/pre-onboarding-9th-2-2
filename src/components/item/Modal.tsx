@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { formatCurrency } from "../../utils/formatCurrency";
-import AddButton from "./SaveItemButton";
+import ReservationButton from "./ReservationButton";
 
 interface Props {
   isOpen: boolean;
@@ -56,7 +56,7 @@ const Modal = ({ isOpen, onClose, targetItem }: Props) => {
               {formatCurrency(targetItem.price)}
             </Text>
             <Box display="flex" alignItems="center">
-              잔여
+              1인당 최대 구매 개수
               <Text fontSize="18px" fontWeight="500" ml="12px">
                 {targetItem.maximumPurchases}
               </Text>
@@ -65,7 +65,7 @@ const Modal = ({ isOpen, onClose, targetItem }: Props) => {
           </Box>
         </ModalBody>
         <ModalFooter>
-          <AddButton item={targetItem} />
+          <ReservationButton item={targetItem} />
         </ModalFooter>
       </ModalContent>
     </ModalUI>
