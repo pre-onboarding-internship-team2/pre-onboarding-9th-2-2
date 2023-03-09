@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { Product } from "@/services/product";
+import { useProduct } from "@/components/ProductContext";
 import { SimpleGrid } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { Fragment } from "react";
 import ProductItem from "./ProductItem";
 
-export default function ProductList({ products }: { products: Product[] }) {
+export default function ProductList() {
+  const { products } = useProduct();
   return (
     <>
       <SimpleGrid

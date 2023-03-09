@@ -1,12 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import Head from "next/head";
-import { fetchGetProduct, Product } from "../services/product";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
 import ProductList from "@/components/ProductList";
 import { css } from "@emotion/react";
+import Filter from "@/components/ProductFilter";
+import { GetStaticProps } from "next";
+import { fetchGetProduct } from "@/services/product";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { ProductProvider } from "@/components/ProductContext";
 
-export default function MainPage({ products }: { products: Product[] }) {
+export default function MainPage() {
   return (
     <>
       <Head>
@@ -31,18 +34,24 @@ export default function MainPage({ products }: { products: Product[] }) {
           `}
         >
           <Link href={"reservations"}>장바구니</Link>
-          <ProductList products={products} />
+          <ProductProvider>
+            <Filter />
+            <ProductList />
+          </ProductProvider>
         </div>
       </main>
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data: products } = await fetchGetProduct();
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(["products"], fetchGetProduct);
 
   return {
     props: {
-      products,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
