@@ -1,3 +1,4 @@
+import PageLayout from "@/components/PageLayout";
 import { ReservationsProvider } from "@/contexts/Reservations.context";
 import "@/styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -7,7 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <ReservationsProvider>
-        <Component {...pageProps} />
+        <PageLayout>
+          <Component {...pageProps} />
+        </PageLayout>
       </ReservationsProvider>
     </ChakraProvider>
   );

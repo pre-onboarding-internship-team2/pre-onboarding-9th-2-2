@@ -1,10 +1,9 @@
-import Header from "@/components/Header";
+import Filter from "@/components/filter/Filter";
 import TravelItemList from "@/components/TravelItemList";
 import { FilterProvider } from "@/contexts/Filter.context";
 import { TravelItemsProvider } from "@/contexts/TravelItems.context";
 import { loadTravelItems } from "@/lib/loadTravelItems";
 import { TravelItem } from "@/types/travelItem.type";
-import { Box } from "@chakra-ui/react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
@@ -18,14 +17,12 @@ const Main = ({
         <meta name="description" content="여행 상품 목록 페이지" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Box as="main">
-        <TravelItemsProvider travelItems={travelItems}>
-          <FilterProvider>
-            <Header />
-            <TravelItemList />
-          </FilterProvider>
-        </TravelItemsProvider>
-      </Box>
+      <TravelItemsProvider travelItems={travelItems}>
+        <FilterProvider>
+          <Filter />
+          <TravelItemList />
+        </FilterProvider>
+      </TravelItemsProvider>
     </>
   );
 };

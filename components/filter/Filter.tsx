@@ -1,6 +1,7 @@
 import { useFilterContext } from "@/contexts/Filter.context";
 import { SpaceCategory } from "@/types/travelItem.type";
-import { Button, ButtonGroup, Flex } from "@chakra-ui/react";
+import { Button, ButtonGroup, Container, Flex } from "@chakra-ui/react";
+import { HEADER_HEIGHT } from "../Header";
 import PriceFilter from "./PriceFilter";
 
 function Filter() {
@@ -9,6 +10,11 @@ function Filter() {
       justifyContent="space-between"
       flexDirection={{ base: "column", md: "row" }}
       gap={3}
+      position="sticky"
+      top={HEADER_HEIGHT}
+      py={2}
+      backgroundColor="chakra-body-bg"
+      zIndex="sticky"
     >
       <SpaceFilter />
       <PriceFilter />
