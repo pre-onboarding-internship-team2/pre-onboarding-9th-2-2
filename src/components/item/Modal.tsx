@@ -1,19 +1,22 @@
-import React from "react";
 import { ItemType } from "../../types/Item.type";
 import {
   Modal as ModalUI,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Image,
   Box,
+  Tag,
+  Divider,
+  List,
+  ListItem,
+  ListIcon,
 } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { formatCurrency } from "../../utils/formatCurrency";
 import ReservationButton from "./ReservationButton";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 interface Props {
   isOpen: boolean;
@@ -23,50 +26,89 @@ interface Props {
 
 const Modal = ({ isOpen, onClose, targetItem }: Props) => {
   return (
-    <ModalUI size="xl" isOpen={isOpen} onClose={onClose}>
+    <ModalUI size="2xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader display="flex">
-          <Text
-            w="30px"
-            h="30px"
-            borderRadius="50%"
-            backgroundColor="#789BFB"
-            color="#fff"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            mr="10px"
-          >
-            {targetItem.idx}
-          </Text>
-          [{targetItem.spaceCategory}] {targetItem.name}
-        </ModalHeader>
         <ModalCloseButton />
-        <ModalBody
-          display="flex"
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          <Image src={targetItem.mainImage} alt={targetItem.name} mr="20px" />
-          <Box display="flex" flexDirection="column">
-            <Text mb="16px">{targetItem.description}</Text>
+        <ModalBody p="40px">
+          <Box display="flex" justifyContent="space-between" mb="20px">
+            <Image
+              src={targetItem.mainImage}
+              alt={targetItem.name}
+              width="50%"
+            />
 
-            <Text fontSize="24px" fontWeight="600" mb="12px">
-              {formatCurrency(targetItem.price)}
-            </Text>
-            <Box display="flex" alignItems="center">
-              1인당 최대 구매 개수
-              <Text fontSize="18px" fontWeight="500" ml="12px">
-                {targetItem.maximumPurchases}
-              </Text>
+            <Box
+              width="45%"
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
+              <Box>
+                <Tag mr="12px">{targetItem.spaceCategory}</Tag>
+                <Text fontSize="1.5rem" fontWeight="800">
+                  {targetItem.name}
+                </Text>
+              </Box>
+
+              <Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  mb="12px"
+                >
+                  <Text fontSize="1rem" fontWeight="500" mr="12px">
+                    가격
+                  </Text>
+                  <Text fontSize="1.6rem" fontWeight="600">
+                    {formatCurrency(targetItem.price)}
+                  </Text>
+                </Box>
+
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  mb="20px"
+                >
+                  <Tag>
+                    1인당 최대 구매 개수
+                    <Text fontSize="18px" fontWeight="500" ml="12px">
+                      {targetItem.maximumPurchases}
+                    </Text>
+                  </Tag>
+                </Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                >
+                  <ReservationButton item={targetItem} />
+                </Box>
+              </Box>
             </Box>
-            <Text>{targetItem.registrationDate}</Text>
+          </Box>
+          <Divider mb="10px" />
+          <Box mb="16px">
+            <Text fontSize="1.1rem" fontWeight="600">
+              상품설명
+            </Text>
+            <Text>{targetItem.description}</Text>
+          </Box>
+          <Box>
+            <List spacing={3} fontSize=".85rem">
+              <ListItem>
+                <ListIcon as={HiOutlineExclamationCircle} color="green.500" />
+                상품번호: {targetItem.idx}
+              </ListItem>
+              <ListItem>
+                <ListIcon as={HiOutlineExclamationCircle} color="green.500" />
+                상품 등록일: {targetItem.registrationDate}
+              </ListItem>
+            </List>
           </Box>
         </ModalBody>
-        <ModalFooter>
-          <ReservationButton item={targetItem} />
-        </ModalFooter>
       </ModalContent>
     </ModalUI>
   );

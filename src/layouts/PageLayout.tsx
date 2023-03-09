@@ -5,7 +5,7 @@ import { Container } from "@chakra-ui/react";
 
 const PageLayout = () => {
   return (
-    <Container maxW="1200px">
+    <Container maxW="1020px">
       <NavBar />
       <Outlet />
     </Container>

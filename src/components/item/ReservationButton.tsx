@@ -35,7 +35,7 @@ const ReservationButton = ({ item }: { item: ItemType }) => {
     <>
       {savedItems.some((savedItem) => savedItem.idx === item.idx) ? (
         <Button
-          backgroundColor="#C0D1FF"
+          backgroundColor="#FCBA9E"
           borderRadius="5"
           onClick={() => {
             handleRemoveFromReservation(item);

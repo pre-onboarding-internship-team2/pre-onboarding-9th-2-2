@@ -29,16 +29,23 @@ const MainPage = () => {
 
   return (
     <>
-      <Box width="50%" py="20px">
-        <SpaceCategorySearch
-          item_list={item_list}
-          setCategoryFilter={setCategoryFilter}
-        />
-        <PriceRangeSearch
-          priceFilter={priceFilter}
-          setPriceFilter={setPriceFilter}
-        />
+      <Box width="100%" pl="20px">
+        <Box width="50%" py="20px">
+          <Box width="40%">
+            <SpaceCategorySearch
+              item_list={item_list}
+              setCategoryFilter={setCategoryFilter}
+            />
+          </Box>
+          <Box>
+            <PriceRangeSearch
+              priceFilter={priceFilter}
+              setPriceFilter={setPriceFilter}
+            />
+          </Box>
+        </Box>
       </Box>
+
       <Grid templateColumns="repeat(3, 1fr)" gap={8} py="50px">
         {categoryFilter === "All"
           ? item_list
