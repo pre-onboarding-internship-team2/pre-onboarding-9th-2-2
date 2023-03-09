@@ -39,8 +39,8 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     setProducts(
       productOrigin.filter(
         ({ spaceCategory, price }) =>
-          price > minPrice &&
-          price < maxPrice &&
+          price >= minPrice &&
+          price <= maxPrice &&
           (locations.length === 0 || locations.includes(spaceCategory))
       )
     );
