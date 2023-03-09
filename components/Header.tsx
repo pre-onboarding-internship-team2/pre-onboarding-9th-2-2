@@ -1,7 +1,8 @@
 import { useReservations } from "@/contexts/Reservations.context";
-import { Box, Container, Link, Stack } from "@chakra-ui/react";
+import { Box, Container, IconButton, Link, Stack, Tag } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Filter from "./filter/Filter";
+import { BsCartCheckFill } from "react-icons/bs";
 
 const Header = () => {
   const { reservations } = useReservations();
@@ -15,8 +16,26 @@ const Header = () => {
             color="whiteAlpha.900"
             fontWeight="bold"
           >
-            <Link as={NextLink} href="/reservations">
-              장바구니 {reservations.length}
+            <Link as={NextLink} href="/reservations" position="relative">
+              <IconButton
+                aria-label="장바구니"
+                icon={<BsCartCheckFill />}
+                variant="unstyled"
+                fontSize="2xl"
+                size="lg"
+              />
+              {!!reservations.length && (
+                <Tag
+                  borderRadius="full"
+                  position="absolute"
+                  top={0}
+                  right={0}
+                  size="sm"
+                  colorScheme="red"
+                >
+                  {reservations.length}
+                </Tag>
+              )}
             </Link>
           </Stack>
         </Container>

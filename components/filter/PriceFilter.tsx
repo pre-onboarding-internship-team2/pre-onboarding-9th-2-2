@@ -45,6 +45,7 @@ function PriceFilter() {
         <Button
           variant="outline"
           onClick={onToggle}
+          colorScheme="blue"
           rightIcon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         >
           가격 설정
