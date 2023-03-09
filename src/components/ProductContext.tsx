@@ -2,9 +2,7 @@ import { fetchGetProduct, Product } from "@/services/product";
 import { useQuery } from "@tanstack/react-query";
 import {
   createContext,
-  Dispatch,
   ReactNode,
-  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -12,7 +10,6 @@ import {
 
 type ProductContextProps = {
   products: Product[];
-  setProducts: Dispatch<SetStateAction<Product[]>>;
   handleFilter: ({
     locations,
     minPrice,
@@ -27,7 +24,7 @@ type ProductContextProps = {
 const ProductContext = createContext<ProductContextProps>(null!);
 
 export function ProductProvider({ children }: { children: ReactNode }) {
-  const { data } = useQuery(["products"], fetchGetProduct, {
+  const { data: productOrigin } = useQuery(["products"], fetchGetProduct, {
     select: ({ data }) => data,
   });
 
@@ -38,9 +35,9 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     minPrice,
     maxPrice,
   }) => {
-    if (!data) throw new Error("no data");
+    if (!productOrigin) throw new Error("no data");
     setProducts(
-      data.filter(
+      productOrigin.filter(
         ({ spaceCategory, price }) =>
           price > minPrice &&
           price < maxPrice &&
@@ -50,11 +47,11 @@ export function ProductProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    if (data) setProducts(data);
-  }, [data]);
+    if (productOrigin) setProducts(productOrigin);
+  }, [productOrigin]);
 
   return (
-    <ProductContext.Provider value={{ products, setProducts, handleFilter }}>
+    <ProductContext.Provider value={{ products, handleFilter }}>
       {children}
     </ProductContext.Provider>
   );
