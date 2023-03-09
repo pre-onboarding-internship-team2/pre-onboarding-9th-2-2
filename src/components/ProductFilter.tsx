@@ -1,13 +1,10 @@
 import {
   Badge,
-  Box,
   Button,
-  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Flex,
@@ -16,7 +13,6 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
   RangeSliderTrack,
-  Stack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";

@@ -11,7 +11,8 @@ export default function ProductList() {
   return (
     <>
       <SimpleGrid
-        minChildWidth={"300px"}
+        mt="10px"
+        minChildWidth="300px"
         gap={4}
         css={css`
           & > div {
