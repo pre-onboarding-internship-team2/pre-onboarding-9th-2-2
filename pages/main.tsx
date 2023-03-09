@@ -1,10 +1,10 @@
 import Filter from "@/components/filter/Filter";
-import TravelItemList from "@/components/TravelItemList";
+import TravelItemList from "@/components/travelItem/TravelItemList";
 import { FilterProvider } from "@/contexts/Filter.context";
 import { TravelItemsProvider } from "@/contexts/TravelItems.context";
 import { loadTravelItems } from "@/lib/loadTravelItems";
 import { TravelItem } from "@/types/travelItem.type";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { InferGetStaticPropsType, GetStaticProps } from "next";
 import Head from "next/head";
 
 const Main = ({

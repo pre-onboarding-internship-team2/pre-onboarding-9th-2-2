@@ -1,5 +1,5 @@
 import useFilteredItems from "@/hooks/useFilteredItems";
-import { Container, SimpleGrid, Text } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import TravelItemComponent from "./TravelItem";
 
 export default function TravelItemList() {
