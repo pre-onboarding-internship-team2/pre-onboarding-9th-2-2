@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import ReservationsList from "@/components/reservations/reservations-list";
-import { ProductType } from "@/types/product-type";
+import { ProductType } from "@/types/product.type";
 import { buildCartPath, extractCart } from "../api/reservations";
 
 interface ReservationPageProps {

@@ -10,7 +10,7 @@ import {
   Box,
   useToast,
 } from "@chakra-ui/react";
-import { ProductType } from "@/types/product-type";
+import { ProductType } from "@/types/product.type";
 
 interface ProductItemProps {
   product: ProductType;

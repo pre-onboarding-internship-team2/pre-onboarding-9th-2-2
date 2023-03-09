@@ -18,24 +18,9 @@ export const priceOptions = [
   },
 ];
 export const categoryOptions = [
-  {
-    value: "서울",
-    text: "서울",
-  },
-  {
-    value: "강원",
-    text: "강원",
-  },
-  {
-    value: "부산",
-    text: "부산",
-  },
-  {
-    value: "대구",
-    text: "대구",
-  },
-  {
-    value: "제주",
-    text: "제주",
-  },
-];
+  "서울",
+  "강원",
+  "부산",
+  "대구",
+  "제주",
+] as const;

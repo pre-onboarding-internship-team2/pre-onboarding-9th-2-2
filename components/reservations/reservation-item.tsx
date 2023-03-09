@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Flex, Text, Button, useToast, Stack, Badge } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ProductType } from "@/types/product-type";
+import { ProductType } from "@/types/product.type";
 
 interface ReservationItemProps {
   reservedItem: ProductType;

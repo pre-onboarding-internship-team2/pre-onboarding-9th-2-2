@@ -8,7 +8,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { ProductType } from "@/types/product-type";
+import { ProductType } from "@/types/product.type";
 import ReservationItem from "./reservation-item";
 
 interface ReservationsListProps {

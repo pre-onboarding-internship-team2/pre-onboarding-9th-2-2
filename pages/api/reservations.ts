@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ProductType } from "@/types/product-type";
+import { ProductType } from "@/types/product.type";
 
 export const buildCartPath = () => {
   return path.join(process.cwd(), "data", "cart.json");

@@ -9,7 +9,7 @@ import {
   Badge,
   Box,
 } from "@chakra-ui/react";
-import { ProductType } from "@/types/product-type";
+import { ProductType } from "@/types/product.type";
 import ProductItem from "./product-item";
 import ModalBox from "../modal/modal";
 
