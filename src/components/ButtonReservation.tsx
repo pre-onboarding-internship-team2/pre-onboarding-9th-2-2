@@ -1,57 +1,41 @@
 import { Product } from "@/services/product";
-import { reservationStorage } from "@/utils/storage";
+import { fetchGetReserve, fetchPostReserve } from "@/services/reserve";
 import { Button, useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function ButtonReservation({ product }: { product: Product }) {
   const toast = useToast();
-  const [isReserved, setIsReserved] = useState(
-    reservationStorage.include(product)
-  );
+  const queryClient = useQueryClient();
+  const { data: reservations } = useQuery(["reserve"], fetchGetReserve, {
+    select: ({ data }) => data,
+  });
 
-  const handleReserve = () => {
-    const isSuccess = reservationStorage.set(product);
-    if (isSuccess)
+  const isReserved = reservations?.some(
+    (e) => e.productInfo.idx === product.idx
+  );
+  const { mutate: postReserve } = useMutation(fetchPostReserve, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["reserve"]);
       toast({
-        title: "예약되었습니다",
+        title: "요청에 성공했습니다.",
         description: "장바구니를 확인해주세요",
         status: "success",
         duration: 1500,
         position: "bottom-right",
         isClosable: true,
       });
-    else
+    },
+    onError: () => {
       toast({
-        title: "예약에 실패했습니다",
+        title: "요청에 실패했습니다",
         description: "장바구니에 이미 담겨있거나 재고가 없습니다",
         status: "error",
         duration: 1500,
         position: "bottom-right",
         isClosable: true,
       });
-  };
-
-  const handleCancelReserve = () => {
-    const isSuccess = reservationStorage.remove(product);
-    if (isSuccess)
-      toast({
-        title: "예약이 취소되었습니다",
-        description: "장바구니를 확인해주세요",
-        status: "warning",
-        duration: 1500,
-        position: "bottom-right",
-        isClosable: true,
-      });
-    else
-      toast({
-        title: "예약 취소에 실패했습니다",
-        description: "관리자에게 문의해주세요",
-        status: "error",
-        duration: 1500,
-        position: "bottom-right",
-        isClosable: true,
-      });
-  };
+    },
+  });
 
   return (
     <>
@@ -61,8 +45,7 @@ export default function ButtonReservation({ product }: { product: Product }) {
           colorScheme={"blue"}
           width={"100%"}
           onClick={() => {
-            handleReserve();
-            setIsReserved(true);
+            postReserve({ productInfo: product, quantity: 1 });
           }}
         >
           예약하기
@@ -73,8 +56,7 @@ export default function ButtonReservation({ product }: { product: Product }) {
           width={"100%"}
           colorScheme="red"
           onClick={() => {
-            handleCancelReserve();
-            setIsReserved(false);
+            postReserve({ productInfo: product, quantity: 0 });
           }}
         >
           예약취소
