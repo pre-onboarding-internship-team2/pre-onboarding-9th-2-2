@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { ADD } from "../redux/slice/cartSlice";
+import { ADD } from "../../redux/slice/cartSlice";
 import { Flex, Image, Text, Badge, Button } from "@chakra-ui/react";
 import {
   Modal,
@@ -9,8 +9,10 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useToast,
 } from "@chakra-ui/react";
-import { dataState } from "../redux/types";
+import { cartState, dataState, RootState } from "../../redux/types";
+import { useAppSelector } from "../../redux/hook/redux.hook";
 
 const ModalBox = ({
   selected,
@@ -22,6 +24,11 @@ const ModalBox = ({
   onClose: () => void;
 }) => {
   const dispatch = useDispatch();
+  const { cart } = useAppSelector((state: RootState) => {
+    return state.cart;
+  });
+
+  const toast = useToast();
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -66,7 +73,16 @@ const ModalBox = ({
             marginX="1"
             borderLeftRadius="full"
             borderRightRadius="full"
-            onClick={() => dispatch(ADD(selected))}
+            onClick={() =>
+              cart.find((item: cartState) => item.idx === selected.idx)
+                ?.count === selected.maximumPurchases
+                ? toast({
+                    title: "한도를 초과하였습니다.",
+                    status: "error",
+                    isClosable: true,
+                  })
+                : dispatch(ADD(selected))
+            }
           >
             예약하기
           </Button>

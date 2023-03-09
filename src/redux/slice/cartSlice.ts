@@ -12,7 +12,6 @@ export const cartSlice = createSlice({
         (product: cartState) => product.idx === action.payload.idx
       );
       if (findData?.count === action.payload.maximumPurchases) {
-        alert("한도를 초과하였습니다.");
         return;
       }
       if (findData) {
@@ -33,7 +32,15 @@ export const cartSlice = createSlice({
         findData.count -= 1;
       }
     },
+    DELETE: (state, action) => {
+      const findData = state.cart.find(
+        (product: cartState) => product.idx === action.payload.idx
+      );
+      state.cart = state.cart.filter(
+        (product: cartState) => product.idx !== findData?.idx
+      );
+    },
   },
 });
 
-export const { ADD, REMOVE } = cartSlice.actions;
+export const { ADD, REMOVE, DELETE } = cartSlice.actions;

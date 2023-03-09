@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector, useAppDispatch } from "../redux/hook/redux.hook";
-import { RootState } from "../redux/types";
+import { cartState, RootState } from "../redux/types";
 import { dataState } from "../redux/types";
 import fetchData from "../redux/function/fetchData";
 import { ADD } from "../redux/slice/cartSlice";
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { Button, useDisclosure, useToast } from "@chakra-ui/react";
 import { Flex, Box, Image, Text, Badge } from "@chakra-ui/react";
-import ModalBox from "../components/ModalBox";
-import FilterBox from "../components/FilterBox";
-import { Link } from "react-router-dom";
+import ModalBox from "../components/main/ModalBox";
+import FilterBox from "../components/main/FilterBox";
+import Header from "../components/Header";
 
 const MainPage = () => {
   const { data, status, error } = useAppSelector((state: RootState) => {
@@ -33,6 +33,8 @@ const MainPage = () => {
     registrationDate: "",
   });
 
+  const toast = useToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -45,15 +47,9 @@ const MainPage = () => {
     }
   }, [status]);
 
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
-
   return (
     <Box>
-      <Button>
-        <Link to="/reservations">장바구니</Link>
-      </Button>
+      <Header />
       <FilterBox data={data} setProducts={setProducts} />
       <Flex flexWrap="wrap" justify="center" align="center">
         {products.map((product: dataState) => (
@@ -104,7 +100,16 @@ const MainPage = () => {
               <Text fontSize="sm">₩ {product.price}</Text>
               <Box alignSelf="flex-end">
                 <Button
-                  onClick={() => dispatch(ADD(product))}
+                  onClick={() =>
+                    cart.find((item: cartState) => item.idx === product.idx)
+                      ?.count === product.maximumPurchases
+                      ? toast({
+                          title: "한도를 초과하였습니다.",
+                          status: "error",
+                          isClosable: true,
+                        })
+                      : dispatch(ADD(product))
+                  }
                   borderLeftRadius="full"
                   borderRightRadius="full"
                   minW="20"

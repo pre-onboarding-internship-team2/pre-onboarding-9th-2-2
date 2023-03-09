@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { dataState } from "../redux/types";
+import { dataState } from "../../redux/types";
 import {
   Box,
   RangeSlider,
@@ -10,11 +10,8 @@ import {
   Button,
   Flex,
 } from "@chakra-ui/react";
-
-interface condition {
-  priceCondition: number[];
-  categoryCondition: string[];
-}
+import { condition } from "./types/types";
+import dataFilter from "./function/dataFilter";
 
 const FilterBox = ({
   data,
@@ -34,38 +31,34 @@ const FilterBox = ({
     []
   );
 
-  const dataFilter = (data: dataState[], condition: condition) => {
-    if (condition.categoryCondition.length === 0) {
-      const filteredData = data.filter(
-        (product: dataState) =>
-          product.price >= condition.priceCondition[0] &&
-          product.price <= condition.priceCondition[1]
-      );
-      return filteredData;
-    } else {
-      const filteredData = data.filter(
-        (product: dataState) =>
-          product.price >= condition.priceCondition[0] &&
-          product.price <= condition.priceCondition[1] &&
-          condition.categoryCondition.includes(product.spaceCategory)
-      );
-      return filteredData;
-    }
-  };
-
   useEffect(() => {
     setProducts(dataFilter(data, filterCondition));
   }, [filterCondition]);
 
   return (
-    <>
-      <Box>
+    <Flex
+      direction="column"
+      shadow="lg"
+      w="full"
+      align="center"
+      justify="center"
+      py="4"
+      my="4"
+    >
+      <Flex gap="6">
         {spaceCategoryArray.map((str: string) => (
           <Button
             key={spaceCategoryArray.indexOf(str) + 1}
+            rounded="full"
+            fontSize="sm"
+            color={
+              filterCondition.categoryCondition.includes(str)
+                ? "white"
+                : "black"
+            }
             bg={
               filterCondition.categoryCondition.includes(str)
-                ? "whatsapp.100"
+                ? "whatsapp.500"
                 : "gray.50"
             }
             onClick={() =>
@@ -85,10 +78,10 @@ const FilterBox = ({
                   }))
             }
           >
-            {str}
+            #{str}
           </Button>
         ))}
-      </Box>
+      </Flex>
       <Box w="75%" p={4}>
         <RangeSlider
           defaultValue={[0, 30000]}
@@ -148,7 +141,7 @@ const FilterBox = ({
           />
         </RangeSlider>
       </Box>
-    </>
+    </Flex>
   );
 };
 
