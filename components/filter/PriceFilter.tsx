@@ -1,5 +1,4 @@
-import { useFilterContext } from "@/contexts/Filter.context";
-import { useTravelItems } from "@/contexts/TravelItems.context";
+import { usePriceFilter } from "@/hooks/usePriceFilter";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -11,6 +10,7 @@ import {
   Button,
   Flex,
   Input,
+  InputProps,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -18,38 +18,27 @@ import {
   PopoverTrigger,
   RangeSlider,
   RangeSliderFilledTrack,
+  RangeSliderProps,
   RangeSliderThumb,
   RangeSliderTrack,
-  Stack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 
 function PriceFilter() {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const { price, changePrice } = useFilterContext();
-  const { travelItems } = useTravelItems();
+  const {
+    startPrice,
+    onStartPriceInputChange,
+    endPrice,
+    onEndPriceInputChange,
+    minPrice,
+    maxPrice,
+    rangeSliderValue,
+    onRangeSliderChange,
+    saveChangedFilterPrice,
+  } = usePriceFilter();
 
-  const travelItemsPrices = travelItems.map((item) => item.price);
-
-  const minPrice = Math.min(...travelItemsPrices);
-  const maxPrice = Math.max(...travelItemsPrices);
-
-  const [startPrice, setStartPrice] = useState<number>(minPrice);
-  const [endPrice, setEndPrice] = useState<number>(maxPrice);
-
-  useEffect(() => {
-    if (!price.start && !price.end) {
-      setStartPrice(minPrice);
-      setEndPrice(maxPrice);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [price]);
-
-  const changeFilterPrice = () => {
-    changePrice({ start: startPrice, end: endPrice });
-  };
   return (
     <Popover isOpen={isOpen} onClose={onClose}>
       <PopoverTrigger>
@@ -63,69 +52,32 @@ function PriceFilter() {
       </PopoverTrigger>
       <PopoverContent minW="lg" p={2}>
         <PopoverArrow />
-        <PopoverBody>
-          <Stack spacing={4}>
-            <Box py={4}>
-              <RangeSlider
-                // eslint-disable-next-line jsx-a11y/aria-proptypes
-                aria-label={["min", "max"]}
-                min={minPrice}
-                max={maxPrice}
-                value={[startPrice, endPrice]}
-                onChange={([start, end]) => {
-                  if (start !== startPrice) setStartPrice(start);
-                  if (end !== endPrice) setEndPrice(end);
-                }}
-              >
-                <RangeSliderTrack boxSize={4} bg="red.100">
-                  <RangeSliderFilledTrack bg="tomato" />
-                </RangeSliderTrack>
-                <RangeSliderThumb boxSize={8} index={0}>
-                  <Box color="tomato" as={ArrowLeftIcon} />
-                </RangeSliderThumb>
-                <RangeSliderThumb boxSize={8} index={1}>
-                  <Box color="tomato" as={ArrowRightIcon} />
-                </RangeSliderThumb>
-              </RangeSlider>
-            </Box>
+        <PopoverBody display="flex" flexDirection="column" gap={8} py={8}>
+          <PriceRangeSlider
+            min={minPrice}
+            max={maxPrice}
+            value={rangeSliderValue}
+            onChange={onRangeSliderChange}
+          />
 
-            <Flex justifyContent="space-between" alignItems="center">
-              <Box>
-                <Text mb="8px">최저 가격</Text>
-                <Input
-                  size="sm"
-                  value={startPrice}
-                  htmlSize={1}
-                  width="auto"
-                  type="number"
-                  onChange={(e) => {
-                    const newValue = +e.currentTarget.value;
-                    setStartPrice(newValue);
-                  }}
-                />
-                원
-              </Box>
-              <Box>-</Box>
-              <Box>
-                <Text mb="8px">최고 가격</Text>
-                <Input
-                  size="sm"
-                  value={endPrice}
-                  htmlSize={1}
-                  width="auto"
-                  type="number"
-                  onChange={(e) => {
-                    const newValue = +e.currentTarget.value;
-                    setEndPrice(newValue);
-                  }}
-                />
-                원
-              </Box>
-            </Flex>
-            <Box textAlign="right">
-              <Button onClick={changeFilterPrice}>적용하기</Button>
-            </Box>
-          </Stack>
+          <Flex justifyContent="space-between" alignItems="center">
+            <PriceFilterInput
+              label="최저 가격"
+              value={startPrice}
+              onChange={onStartPriceInputChange}
+            />
+            <Box>-</Box>
+            <PriceFilterInput
+              label="최고 가격"
+              value={endPrice}
+              onChange={onEndPriceInputChange}
+            />
+          </Flex>
+          <Box textAlign="right">
+            <Button onClick={saveChangedFilterPrice} colorScheme="blue">
+              적용하기
+            </Button>
+          </Box>
         </PopoverBody>
       </PopoverContent>
     </Popover>
@@ -133,3 +85,47 @@ function PriceFilter() {
 }
 
 export default PriceFilter;
+
+function PriceRangeSlider({ min, max, value, onChange }: RangeSliderProps) {
+  return (
+    <RangeSlider
+      // eslint-disable-next-line jsx-a11y/aria-proptypes
+      aria-label={["min", "max"]}
+      min={min}
+      max={max}
+      value={value}
+      onChange={onChange}
+    >
+      <RangeSliderTrack boxSize={4} bg="red.100">
+        <RangeSliderFilledTrack bg="tomato" />
+      </RangeSliderTrack>
+      <RangeSliderThumb boxSize={8} index={0}>
+        <Box color="tomato" as={ArrowLeftIcon} />
+      </RangeSliderThumb>
+      <RangeSliderThumb boxSize={8} index={1}>
+        <Box color="tomato" as={ArrowRightIcon} />
+      </RangeSliderThumb>
+    </RangeSlider>
+  );
+}
+
+function PriceFilterInput({
+  label,
+  value,
+  onChange,
+}: { label: string } & InputProps) {
+  return (
+    <Box>
+      <Text mb="8px">{label}</Text>
+      <Input
+        size="sm"
+        value={value}
+        htmlSize={1}
+        width="auto"
+        type="number"
+        onChange={onChange}
+      />
+      원
+    </Box>
+  );
+}
