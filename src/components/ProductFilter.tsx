@@ -2,6 +2,7 @@ import {
   Badge,
   Box,
   Button,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -23,6 +24,7 @@ import { useProduct } from "@/components/ProductContext";
 import { useState } from "react";
 import { SpaceCategories } from "@/services/product";
 import { css } from "@emotion/react";
+import Image from "next/image";
 
 const PRICE_MAX = 999_999_999;
 const PRICE_CONVERT = (percent: number) => {
@@ -45,7 +47,23 @@ export default function Filter() {
 
   return (
     <>
-      <Button onClick={onOpen}>필터</Button>
+      <Flex
+        w="100%"
+        position="sticky"
+        top="41"
+        borderBottom="solid 1px #e8e8e8"
+        zIndex="10"
+        backgroundColor="white"
+        justifyContent="flex-end"
+        py="1"
+      >
+        <Flex onClick={onOpen} style={{ cursor: "pointer" }}>
+          <Image src="/filter.png" alt="filter" width={24} height={24} />
+          <Text ml={1} fontSize="16px" fontWeight="bold">
+            필터
+          </Text>
+        </Flex>
+      </Flex>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>

@@ -61,7 +61,6 @@ export default function ProductItem({ product }: { product: Product }) {
                 fill
                 css={css`
                   object-fit: cover;
-                  z-index: -1;
                   border-radius: 3px;
                 `}
               />
@@ -163,7 +162,6 @@ export default function ProductItem({ product }: { product: Product }) {
               fill
               css={css`
                 object-fit: cover;
-                z-index: -1;
                 border-radius: 3px;
               `}
             />
