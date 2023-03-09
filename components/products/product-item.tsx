@@ -8,6 +8,7 @@ import {
   Text,
   Badge,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { ProductType } from "@/types/product-type";
 
@@ -17,10 +18,30 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product, showModal }: ProductItemProps) => {
+  const toast = useToast();
+
   const addToCart = async () => {
     await fetch(`/api/reservations`, {
       method: "POST",
       body: JSON.stringify(product),
+    }).then((res) => {
+      if (res.status === 201) {
+        toast({
+          title: "Product Reserved.",
+          description: "Product has well reserved in your cart.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else if (res.status === 422) {
+        toast({
+          title: "Failed to Reserved.",
+          description: "Product is already in your cart.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     });
   };
 

@@ -1,7 +1,7 @@
-import { Stack, Flex, Text, Button } from "@chakra-ui/react";
-import { ProductType } from "@/types/product-type";
 import Image from "next/image";
+import { Flex, Text, Button, useToast } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
+import { ProductType } from "@/types/product-type";
 
 interface ReservationItemProps {
   reservedItem: ProductType;
@@ -9,6 +9,7 @@ interface ReservationItemProps {
 
 const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   const deleteReservedItemHandler = async () => {
     const deletedId = reservedItem.idx;
@@ -17,6 +18,16 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
       body: JSON.stringify({
         deletedId,
       }),
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Product Removed.",
+          description: "Product has well removed from your cart.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     });
     queryClient.invalidateQueries({ queryKey: ["carts"] });
   };

@@ -15,8 +15,8 @@ const MainPage: NextPage<MainPageProps> = ({ products }) => {
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   const processedProducts = () => {
-    if (!priceOption) {
-      return filteredProducts;
+    if (!priceOption && !categoryOption) {
+      setFilteredProducts(products);
     } else {
       const filteredData = products.reduce<ProductType[]>((acc, cur) => {
         const priceCondition =
@@ -75,6 +75,7 @@ export const getStaticProps = async () => {
       throw new Error(`Error Fetching Data!`);
     }
     const products = await response.json();
+
     return {
       props: {
         products,

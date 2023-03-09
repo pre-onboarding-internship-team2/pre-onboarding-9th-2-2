@@ -16,7 +16,7 @@ export const extractCart = (filePath: string): ProductType[] => {
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const products = req.body;
-    const parsedProducts: ProductType = JSON.parse(products);
+    const parsedProducts = JSON.parse(products);
 
     const filePath = buildCartPath();
     const data = extractCart(filePath);
