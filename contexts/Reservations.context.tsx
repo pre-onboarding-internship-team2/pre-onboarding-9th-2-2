@@ -1,14 +1,21 @@
 import { TravelItem } from "@/types/travelItem.type";
 import { createContext, useCallback, useContext, useState } from "react";
 
+interface ReservationItem extends TravelItem {
+  count: number;
+}
+
 interface ReservationContextType {
-  reservations: TravelItem[];
+  reservations: ReservationItem[];
 }
 
 interface ReservationChangeContextType {
   add(newItem: TravelItem): void;
   remove(idx: TravelItem["idx"]): void;
   checkExist(newItem: TravelItem): boolean;
+  increaseCount(idx: number): void;
+  decreaseCount(idx: number): void;
+  totalAmount: number;
 }
 
 const ReservationContext = createContext<ReservationContextType | null>(null);
@@ -41,7 +48,11 @@ export function ReservationsProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [reservations, setReservations] = useState<TravelItem[]>([]);
+  const [reservations, setReservations] = useState<ReservationItem[]>([]);
+
+  const totalAmount = reservations.reduce<number>((sum, reservationItem) => {
+    return sum + reservationItem.price * reservationItem.count;
+  }, 0);
 
   const checkExist = useCallback(
     (newItem: TravelItem) => {
@@ -52,7 +63,10 @@ export function ReservationsProvider({
   );
 
   const add = useCallback((newItem: TravelItem) => {
-    setReservations((prevReservations) => [...prevReservations, newItem]);
+    setReservations((prevReservations) => [
+      ...prevReservations,
+      { ...newItem, count: 1 },
+    ]);
   }, []);
 
   const remove = useCallback((idx: TravelItem["idx"]) => {
@@ -61,9 +75,52 @@ export function ReservationsProvider({
     );
   }, []);
 
+  const increaseCount = useCallback(
+    (idx: number) => {
+      const item = reservations.find((_item) => _item.idx === idx);
+      if (!item) return;
+      if (item.maximumPurchases === item.count) return;
+      setReservations((prevList) => {
+        return prevList.map((listItem) => {
+          if (listItem.idx === idx) {
+            return { ...listItem, count: listItem.count + 1 };
+          }
+          return listItem;
+        });
+      });
+    },
+    [reservations]
+  );
+
+  const decreaseCount = useCallback(
+    (idx: number) => {
+      const item = reservations.find((_item) => _item.idx === idx);
+      if (!item) return;
+      if (item.maximumPurchases === 1) return;
+      setReservations((prevList) => {
+        return prevList.map((listItem) => {
+          if (listItem.idx === idx) {
+            return { ...listItem, count: listItem.count - 1 };
+          }
+          return listItem;
+        });
+      });
+    },
+    [reservations]
+  );
+
   return (
     <ReservationContext.Provider value={{ reservations }}>
-      <ReservationsChangeContext.Provider value={{ add, remove, checkExist }}>
+      <ReservationsChangeContext.Provider
+        value={{
+          add,
+          remove,
+          checkExist,
+          totalAmount,
+          increaseCount,
+          decreaseCount,
+        }}
+      >
         {children}
       </ReservationsChangeContext.Provider>
     </ReservationContext.Provider>
