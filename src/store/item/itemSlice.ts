@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import mockData from "../../data/mockData.json";
 
 interface ItemsState {
   items: [];
@@ -12,13 +12,8 @@ const initialState = {
 } as ItemsState;
 
 export const fetchItems = createAsyncThunk("items/fetchItems", async () => {
-  const response = await axios({
-    method: "get",
-    url: import.meta.env.VITE_APP_API,
-    responseType: "json",
-  });
-
-  return response?.data;
+  const data = JSON.parse(JSON.stringify(mockData));
+  return data;
 });
 
 export const itemSlice = createSlice({
