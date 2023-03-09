@@ -10,6 +10,8 @@ import { Flex, Box, Image, Text, Badge } from "@chakra-ui/react";
 import ModalBox from "../components/main/ModalBox";
 import FilterBox from "../components/main/FilterBox";
 import Header from "../components/Header";
+import SkeletonPage from "./SkeletonPage";
+import NotFoundPage from "./NotFoundPage";
 
 const MainPage = () => {
   const { data, status, error } = useAppSelector((state: RootState) => {
@@ -46,6 +48,12 @@ const MainPage = () => {
       setProducts(data);
     }
   }, [status]);
+
+  if (status === "loading") {
+    return <SkeletonPage />;
+  } else if (status === "rejected") {
+    return <NotFoundPage />;
+  }
 
   return (
     <Box>
