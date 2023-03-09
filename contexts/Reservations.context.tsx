@@ -1,12 +1,13 @@
 import { TravelItem } from "@/types/travelItem.type";
 import { createContext, useCallback, useContext, useState } from "react";
 
-interface ReservationItem extends TravelItem {
+export interface ReservationItem extends TravelItem {
   count: number;
 }
 
 interface ReservationContextType {
   reservations: ReservationItem[];
+  totalAmount: number;
 }
 
 interface ReservationChangeContextType {
@@ -15,7 +16,6 @@ interface ReservationChangeContextType {
   checkExist(newItem: TravelItem): boolean;
   increaseCount(idx: number): void;
   decreaseCount(idx: number): void;
-  totalAmount: number;
 }
 
 const ReservationContext = createContext<ReservationContextType | null>(null);
@@ -71,7 +71,7 @@ export function ReservationsProvider({
 
   const remove = useCallback((idx: TravelItem["idx"]) => {
     setReservations((prevReservations) =>
-      prevReservations.filter((item) => item.idx === idx)
+      prevReservations.filter((item) => item.idx !== idx)
     );
   }, []);
 
@@ -96,7 +96,7 @@ export function ReservationsProvider({
     (idx: number) => {
       const item = reservations.find((_item) => _item.idx === idx);
       if (!item) return;
-      if (item.maximumPurchases === 1) return;
+      if (item.count === 1) return;
       setReservations((prevList) => {
         return prevList.map((listItem) => {
           if (listItem.idx === idx) {
@@ -110,13 +110,13 @@ export function ReservationsProvider({
   );
 
   return (
-    <ReservationContext.Provider value={{ reservations }}>
+    <ReservationContext.Provider value={{ reservations, totalAmount }}>
       <ReservationsChangeContext.Provider
         value={{
           add,
           remove,
           checkExist,
-          totalAmount,
+
           increaseCount,
           decreaseCount,
         }}
