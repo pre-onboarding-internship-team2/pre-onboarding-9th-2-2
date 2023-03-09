@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "./Modal";
+import Modal from "./ItemModal";
 import { ItemType } from "../../types/Item.type";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {

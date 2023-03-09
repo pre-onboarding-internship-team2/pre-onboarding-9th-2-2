@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from "@chakra-ui/react";
 import { ItemType } from "../../types/Item.type";
-import SavedItem from "./savedItem";
+import SavedItem from "./SavedItem";
 
 const SavedItemsList = ({
   reservation_list,

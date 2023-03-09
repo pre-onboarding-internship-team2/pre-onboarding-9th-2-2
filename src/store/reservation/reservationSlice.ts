@@ -8,7 +8,9 @@ interface SavedItemsState {
 }
 
 const initialState = {
-  savedItems: [],
+  savedItems: localStorage.getItem("savedItems")
+    ? JSON.parse(localStorage.getItem("savedItems")!)
+    : [],
   totalQuantity: 0,
   totalAmount: 0,
 } as SavedItemsState;
@@ -17,6 +19,14 @@ export const reservationSlice = createSlice({
   name: "rvReducer",
   initialState,
   reducers: {
+    getSavedItems(state, action) {
+      const savedItem = localStorage.getItem("savedItems");
+      if (savedItem) {
+        state.savedItems = JSON.parse(savedItem);
+      } else {
+        return;
+      }
+    },
     addToReserVation(state, action) {
       const findItem = state.savedItems.find(
         (item) => item.idx === action.payload.idx
@@ -32,6 +42,7 @@ export const reservationSlice = createSlice({
         const tempItem = { ...action.payload, quantity: 1 };
         state.savedItems.push(tempItem);
       }
+      localStorage.setItem("savedItems", JSON.stringify(state.savedItems));
     },
     subtractReserVation(state, action) {
       const findItem = state.savedItems.find(
@@ -43,15 +54,18 @@ export const reservationSlice = createSlice({
       if (findItem) {
         findItem.quantity -= 1;
       }
+      localStorage.setItem("savedItems", JSON.stringify(state.savedItems));
     },
     removeFromReserVation(state, action) {
       const newSavedItems = state.savedItems.filter(
         (item) => item.idx !== action.payload.idx
       );
       state.savedItems = newSavedItems;
+      localStorage.setItem("savedItems", JSON.stringify(state.savedItems));
     },
     clearReservations(state, action) {
       state.savedItems = [];
+      localStorage.setItem("savedItems", JSON.stringify(state.savedItems));
     },
     getTotalPrice(state, action) {
       let { total, quantity } = state.savedItems.reduce(
@@ -74,6 +88,7 @@ export const reservationSlice = createSlice({
 });
 
 export const {
+  getSavedItems,
   addToReserVation,
   subtractReserVation,
   removeFromReserVation,
