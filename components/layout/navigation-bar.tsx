@@ -27,7 +27,7 @@ const NavigationBar = ({ inView }: NavigationBarProps) => {
       left="0"
       right="0"
       zIndex={2}
-      transition="all 0.2s ease-in-out"
+      transition="box-shadow 0.2s ease-in-out"
       bg={!inView ? "white" : "transparent"}
       boxShadow={!inView ? "base" : "none"}
     >

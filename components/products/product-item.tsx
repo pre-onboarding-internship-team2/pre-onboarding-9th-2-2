@@ -49,7 +49,6 @@ const ProductItem = ({ product, showModal }: ProductItemProps) => {
     <Flex
       pb="0.8rem"
       minW="20rem"
-      maxW="20rem"
       boxShadow="dark-lg"
       direction="column"
       borderRadius="10px"
@@ -76,11 +75,7 @@ const ProductItem = ({ product, showModal }: ProductItemProps) => {
         </Box>
       </Stack>
       <ButtonGroup display="flex" justifyContent="center">
-        <Button
-          type="button"
-          id={String(product.idx)}
-          onClick={() => showModal(product)}
-        >
+        <Button type="button" onClick={() => showModal(product)}>
           더보기
         </Button>
         <Button type="button" onClick={addToCart}>

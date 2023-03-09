@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Flex, SimpleGrid } from "@chakra-ui/react";
+import {
+  Stat,
+  StatGroup,
+  StatLabel,
+  StatNumber,
+  Flex,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { ProductType } from "@/types/product-type";
 import ReservationItem from "./reservation-item";
@@ -10,6 +17,7 @@ interface ReservationsListProps {
 
 const ReservationsList = ({ data }: ReservationsListProps) => {
   const [reservationItems, setReservationItems] = useState(data);
+
   const { data: carts } = useQuery<ProductType[]>(
     ["carts"],
     () =>
@@ -28,21 +36,40 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
           name: carts[key].name,
           mainImage: carts[key].mainImage,
           price: carts[key].price,
-          maximumPurchases: carts[key].maximumPurchases,
+          spaceCategory: carts[key].spaceCategory,
         });
       }
       setReservationItems(revalidatedItems);
     }
   }, [carts]);
 
+  const totalPrice =
+    reservationItems.length > 0
+      ? reservationItems
+          .map((item) => item.price)
+          .reduce((acc, cur) => acc + cur, 0)
+      : 0;
+
   return (
-    <Flex justify="center">
-      <SimpleGrid templateColumns="repeat(2, 1fr)" gap={4}>
-        {reservationItems?.map((item) => (
-          <ReservationItem key={item.idx} reservedItem={item} />
-        ))}
-      </SimpleGrid>
-    </Flex>
+    <>
+      <StatGroup>
+        <Stat mr={4} display="flex" justifyContent="flex-end">
+          <StatLabel>총 개수</StatLabel>
+          <StatNumber>{reservationItems.length}</StatNumber>
+        </Stat>
+        <Stat ml={4}>
+          <StatLabel>총 비용</StatLabel>
+          <StatNumber>{totalPrice}</StatNumber>
+        </Stat>
+      </StatGroup>
+      <Flex p="10px" justify="center">
+        <SimpleGrid templateColumns="repeat(2, 1fr)" gap={4}>
+          {reservationItems?.map((item) => (
+            <ReservationItem key={item.idx} reservedItem={item} />
+          ))}
+        </SimpleGrid>
+      </Flex>
+    </>
   );
 };
 
