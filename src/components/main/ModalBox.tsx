@@ -73,6 +73,8 @@ const ModalBox = ({
             marginX="1"
             borderLeftRadius="full"
             borderRightRadius="full"
+            color="white"
+            bg="whatsapp.500"
             onClick={() =>
               cart.find((item: cartState) => item.idx === selected.idx)
                 ?.count === selected.maximumPurchases
@@ -91,6 +93,8 @@ const ModalBox = ({
             marginX="1"
             borderLeftRadius="full"
             borderRightRadius="full"
+            color="white"
+            bg="red.500"
           >
             취소하기
           </Button>

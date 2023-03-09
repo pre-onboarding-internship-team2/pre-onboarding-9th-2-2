@@ -67,7 +67,8 @@ const ReservationsPage = () => {
                     <Button
                       fontSize="xl"
                       roundedLeft="full"
-                      bg="red.400"
+                      bg="red.500"
+                      color="white"
                       onClick={() => dispatch(REMOVE(item))}
                     >
                       -
@@ -75,7 +76,8 @@ const ReservationsPage = () => {
                     <Button
                       fontSize="xl"
                       roundedRight="full"
-                      bg="green.300"
+                      bg="whatsapp.500"
+                      color="white"
                       onClick={() =>
                         item.count === item.maximumPurchases
                           ? toast({
@@ -108,7 +110,7 @@ const ReservationsPage = () => {
             <Button
               roundedLeft="full"
               roundedRight="full"
-              bg="whatsapp.600"
+              bg="whatsapp.500"
               color="white"
             >
               결제하기

@@ -113,9 +113,10 @@ const MainPage = () => {
                   borderLeftRadius="full"
                   borderRightRadius="full"
                   minW="20"
-                  bg="blackAlpha.50"
+                  color="white"
+                  bg="whatsapp.500"
                 >
-                  예약
+                  예약하기
                 </Button>
               </Box>
             </Flex>
