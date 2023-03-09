@@ -23,15 +23,13 @@ export const reservationSlice = createSlice({
       );
 
       if (findItem?.quantity === action.payload.maximumPurchases) {
-        // findItem ? (findItem.available = false) : null;
         return;
       }
 
       if (findItem) {
         findItem.quantity += 1;
-        // findItem.available = true;
       } else {
-        const tempItem = { ...action.payload, quantity: 1, available: true };
+        const tempItem = { ...action.payload, quantity: 1 };
         state.savedItems.push(tempItem);
       }
     },
@@ -69,7 +67,6 @@ export const reservationSlice = createSlice({
         { total: 0, quantity: 0 }
       );
 
-      total = parseFloat(total.toFixed(2));
       state.totalQuantity = quantity;
       state.totalAmount = total;
     },

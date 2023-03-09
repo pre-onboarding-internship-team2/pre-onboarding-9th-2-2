@@ -6,7 +6,7 @@ import {
   RangeSliderThumb,
   RangeSliderMark,
 } from "@chakra-ui/react";
-import { PriceRange_ } from "../../types/priceRange.type";
+import { PriceRange } from "../../types/priceRange.type";
 
 type Props = {
   priceFilter: number[];
@@ -26,7 +26,7 @@ const PriceRangeSearch = ({ setPriceFilter }: Props) => {
           setPriceFilter(e);
         }}
       >
-        {PriceRange_.map((rangeValue, idx) => {
+        {PriceRange.map((rangeValue, idx) => {
           return (
             <RangeSliderMark
               value={rangeValue.range}

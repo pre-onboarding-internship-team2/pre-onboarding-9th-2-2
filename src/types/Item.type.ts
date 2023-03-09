@@ -8,10 +8,4 @@ export type ItemType = {
   maximumPurchases: number;
   registrationDate: string;
   quantity: number;
-  // available: boolean;
-};
-
-export type savedItemType = {
-  item: ItemType;
-  quantity: number;
 };

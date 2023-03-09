@@ -19,6 +19,14 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
+
+  const startPoint = PriceRange.find(
+    (val) => val.range === priceFilter[0]
+  )?.price;
+  const endPoint = PriceRange.find(
+    (val) => val.range === priceFilter[1]
+  )?.price;
+
   return (
     <>
       <Box width="50%" py="20px">
@@ -31,20 +39,13 @@ const MainPage = () => {
           setPriceFilter={setPriceFilter}
         />
       </Box>
-
-      <Grid templateColumns="repeat(4, 1fr)" gap={10} py="50px">
+      <Grid templateColumns="repeat(3, 1fr)" gap={8} py="50px">
         {categoryFilter === "All"
           ? item_list
               ?.filter((item: ItemType) => {
                 return (
-                  item.price >=
-                    Object.values(PriceRange)[
-                      Object.keys(PriceRange).indexOf(priceFilter[0].toString())
-                    ] &&
-                  item.price <=
-                    Object.values(PriceRange)[
-                      Object.keys(PriceRange).indexOf(priceFilter[1].toString())
-                    ]
+                  item.price >= (startPoint ? startPoint : 0) &&
+                  item.price <= (endPoint ? endPoint : 0)
                 );
               })
               ?.map((item: ItemType) => <Item key={item.idx} item={item} />)
@@ -54,14 +55,8 @@ const MainPage = () => {
               )
               ?.filter((item: ItemType) => {
                 return (
-                  item.price >=
-                    Object.values(PriceRange)[
-                      Object.keys(PriceRange).indexOf(priceFilter[0].toString())
-                    ] &&
-                  item.price <=
-                    Object.values(PriceRange)[
-                      Object.keys(PriceRange).indexOf(priceFilter[1].toString())
-                    ]
+                  item.price >= (startPoint ? startPoint : 0) &&
+                  item.price <= (endPoint ? endPoint : 0)
                 );
               })
               .map((item: ItemType) => <Item key={item.idx} item={item} />)}
