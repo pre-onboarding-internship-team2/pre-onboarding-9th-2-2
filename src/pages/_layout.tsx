@@ -1,12 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import Link from "next/link";
 import { ReactNode } from "react";
-import { Box, Divider, Flex } from "@chakra-ui/react";
+import { Badge, Box, Flex } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import { fetchGetReserve } from "@/services/reserve";
 
 export default function LayoutRoot({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const { data: reservations } = useQuery(["reserve"], fetchGetReserve, {
+    select: ({ data }) => data,
+  });
 
   return (
     <>
@@ -61,6 +66,12 @@ export default function LayoutRoot({ children }: { children: ReactNode }) {
             `}
           >
             장바구니
+            {reservations === undefined ? null : (
+              <Badge ml="5px" mb="2px" colorScheme={"blue"}>
+                {" "}
+                {reservations.length}
+              </Badge>
+            )}
           </Link>
         </Flex>
         <Box

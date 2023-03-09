@@ -9,6 +9,7 @@ import {
   DrawerOverlay,
   Flex,
   Heading,
+  Input,
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderThumb,
@@ -22,15 +23,13 @@ import { SpaceCategories } from "@/services/product";
 import { css } from "@emotion/react";
 import Image from "next/image";
 
-const PRICE_MAX = 999_999_999;
-const PRICE_CONVERT = (percent: number) => {
-  return percent * 1000;
-};
+const PRICE_MAX = 100_000;
 
 export default function Filter() {
   const { handleFilter } = useProduct();
   const [locations, setLocations] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(PRICE_MAX);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const addLocation = (location: string) => {
@@ -66,14 +65,29 @@ export default function Filter() {
           <DrawerCloseButton />
           <DrawerHeader>필터</DrawerHeader>
 
-          <DrawerBody>
+          <DrawerBody
+            css={css`
+              & > h2 {
+                margin-bottom: 8px;
+                margin-top: 24px;
+              }
+            `}
+          >
             <Heading size="sm">가격</Heading>
-
+            <Flex justifyContent={"space-between"}>
+              <Text fontSize={"xs"}>0원</Text>
+              <Text fontSize={"xs"} align="right">
+                {PRICE_MAX.toLocaleString("ko")}원
+              </Text>
+            </Flex>
             <RangeSlider
               aria-label={["min", "max"]}
-              onChangeEnd={setPriceRange}
-              defaultValue={priceRange}
-              step={5}
+              onChangeEnd={([min, max]) => {
+                setMinPrice(min), setMaxPrice(max);
+              }}
+              defaultValue={[minPrice, maxPrice]}
+              step={5000}
+              max={100_000}
             >
               <RangeSliderTrack>
                 <RangeSliderFilledTrack />
@@ -81,24 +95,23 @@ export default function Filter() {
               <RangeSliderThumb index={0} />
               <RangeSliderThumb index={1} />
             </RangeSlider>
-            <Flex justifyContent={"space-between"}>
-              <Text fontSize={"xs"}>0원</Text>
-              <Text fontSize={"xs"} align="right">
-                {PRICE_CONVERT(100).toLocaleString("ko")}원
-                <br />
-                이상
-              </Text>
+
+            <Flex justifyContent="space-between">
+              <Input
+                width="80px"
+                size="xs"
+                placeholder={minPrice.toString()}
+                onChange={(e) => setMinPrice(Number(e.target.value))}
+              />
+              <Text> ~ </Text>
+              <Input
+                width="80px"
+                size="xs"
+                placeholder={maxPrice.toString()}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+              />
             </Flex>
-            <Text fontSize={"sm"}>
-              최소 : {PRICE_CONVERT(priceRange[0]).toLocaleString("ko")}원
-            </Text>
-            <Text fontSize={"sm"}>
-              최대 : {PRICE_CONVERT(priceRange[1]).toLocaleString("ko")}원
-              {priceRange[1] === 100 ? " 이상" : null}
-            </Text>
-            <Heading size="sm" mt={5}>
-              지역
-            </Heading>
+            <Heading size="sm">지역</Heading>
             {SpaceCategories.map((e) => (
               <Badge
                 key={e}
@@ -106,11 +119,7 @@ export default function Filter() {
                 variant={locations.includes(e) ? "solid" : "outline"}
                 colorScheme={locations.includes(e) ? "blue" : "gray"}
                 onClick={() => addLocation(e)}
-                css={css`
-                  :hover {
-                    cursor: pointer;
-                  }
-                `}
+                _hover={{ cursor: "pointer" }}
               >
                 {e}
               </Badge>
@@ -125,8 +134,8 @@ export default function Filter() {
                 onClick={() => {
                   handleFilter({
                     locations,
-                    minPrice: PRICE_CONVERT(priceRange[0]),
-                    maxPrice: PRICE_CONVERT(priceRange[1]),
+                    minPrice,
+                    maxPrice,
                   });
                   onClose();
                 }}
