@@ -1,29 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { productList } from '../redux.interface';
+import { ILocationFilter, IPrice, maxPrice, productList } from '../redux.interface';
 
-const spaceCategory = [...new Set(productList.map((product) => product.spaceCategory))] as const;
+const locationCategory = [...new Set(productList.map((product) => product.spaceCategory))] as const;
 
 export const productSlice = createSlice({
   name: 'productReducer',
   initialState: {
     products: productList,
-    spaceFilter: spaceCategory.map((a) => ({ ['space']: a, ['clicked']: true })),
+    locationFilter: locationCategory.map((a) => ({
+      ['location']: a,
+      ['clicked']: true,
+    })) as ILocationFilter[],
+    priceFilter: { min: 0, max: maxPrice } as IPrice,
   },
   reducers: {
-    space: (state, action) => {
-      console.log(action.payload.target);
-      console.log(action.payload.clicked);
+    location: (state, action) => {
       return {
         ...state,
-        spaceFilter: state.spaceFilter.map((spaceObj) =>
-          spaceObj.space == action.payload.target
-            ? { ...spaceObj, clicked: action.payload.clicked }
-            : spaceObj
+        locationFilter: state.locationFilter.map((locationObj) =>
+          locationObj.location == action.payload.target
+            ? { ...locationObj, clicked: action.payload.clicked }
+            : locationObj
         ),
+      };
+    },
+    price: (state, action) => {
+      console.log(action.payload[0]);
+      console.log(action.payload[1]);
+      return {
+        ...state,
+        priceFilter: {
+          min: action.payload[0],
+          max: action.payload[1],
+        },
       };
     },
   },
 });
 
-export const { space } = productSlice.actions;
+export const { location, price } = productSlice.actions;

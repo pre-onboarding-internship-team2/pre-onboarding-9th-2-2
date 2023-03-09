@@ -3,7 +3,8 @@ import { Flex } from '@chakra-ui/react';
 import Cart from '../components/Cart';
 import Header from '../components/Header';
 import Product from '../components/Product';
-import SpaceFilter from '../components/SpaceFilter';
+import LocationFilter from '../components/filters/LocationFilter';
+import PriceFilter from '../components/filters/PriceFilter';
 
 function Main() {
   return (
@@ -11,7 +12,8 @@ function Main() {
       <Header />
       <Flex flexDirection={'column'} mx={10}>
         <Flex my={10} justifyContent={'space-between'}>
-          <SpaceFilter />
+          <LocationFilter />
+          <PriceFilter />
           <Cart />
         </Flex>
         <Product />

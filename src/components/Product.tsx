@@ -18,26 +18,35 @@ import { useAppSelector } from '../redux/hook/redux.hook';
 import { IProduct, productList } from '../redux/redux.interface';
 import { increase } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
-import Modal from './Modal';
+import ProductModal from './Modal';
 
 function Product() {
-  const spaceFilter = useAppSelector((state) => state.product.spaceFilter);
-  const clickedSpace = spaceFilter
-    .filter((space) => space.clicked == true)
-    .map((target) => target.space);
+  const locationFilter = useAppSelector((state) => state.product.locationFilter);
+  const priceFilter = useAppSelector((state) => state.product.priceFilter);
+  console.log(priceFilter);
+
+  const clickedLoaction = locationFilter
+    .filter((location) => location.clicked == true)
+    .map((target) => target.location);
 
   const [showProducts, setShowProducts] = useState<IProduct[]>(productList);
-
   useEffect(() => {
-    console.log('spaces:', clickedSpace);
-    setShowProducts(productList.filter((product) => clickedSpace.includes(product.spaceCategory)));
-  }, [spaceFilter]);
+    setShowProducts((prev) => {
+      const locationFiltered = productList.filter((product) =>
+        clickedLoaction.includes(product.spaceCategory)
+      );
+      const finalFiltered = locationFiltered.filter(
+        (product) => product.price >= priceFilter.min && product.price <= priceFilter.max
+      );
+      return finalFiltered;
+    });
+  }, [locationFilter, priceFilter]);
 
   const dispatch = useAppDispatch();
-
   const onClickHandle = (item: IProduct) => {
     dispatch(increase(item));
   };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [clicked, setClicked] = useState<IProduct>();
 
@@ -60,9 +69,19 @@ function Product() {
                 <Heading size="sm" color="white">
                   {item.name}
                 </Heading>
-                <Tag size="sm" height="10px" backgroundColor="#FFF0E3" width="-webkit-fit-content">
-                  {item.spaceCategory}
-                </Tag>
+                <Flex>
+                  <Tag size={'sm'} width={'-webkit-fit-content'}>
+                    상품번호: {item.idx}
+                  </Tag>
+                  <Tag
+                    size="sm"
+                    marginLeft={2}
+                    backgroundColor="#FFF0E3"
+                    width="-webkit-fit-content"
+                  >
+                    {item.spaceCategory}
+                  </Tag>
+                </Flex>
               </Stack>
             </CardBody>
             <CardFooter flexGrow={1} justifyContent="space-between">
@@ -71,7 +90,7 @@ function Product() {
               </Text>
               <Button onClick={() => onClickHandle(item)}>예약</Button>
             </CardFooter>
-            <Modal selected={clicked!} isOpen={isOpen} onClose={onClose} />
+            <ProductModal selected={clicked!} isOpen={isOpen} onClose={onClose} />
           </Card>
         ))}
       </SimpleGrid>

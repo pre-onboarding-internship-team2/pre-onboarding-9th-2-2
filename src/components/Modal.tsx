@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 import { IProduct } from '../redux/redux.interface';
 
-const TravelModal = ({
+const ProductModal = ({
   selected,
   isOpen,
   onClose,
@@ -53,4 +53,4 @@ const TravelModal = ({
     </Modal>
   );
 };
-export default TravelModal;
+export default ProductModal;
