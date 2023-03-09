@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, SimpleGrid } from "@chakra-ui/react";
+import { Flex, SimpleGrid } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { ProductType } from "@/types/product-type";
 import ReservationItem from "./reservation-item";
@@ -36,13 +36,13 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
   }, [carts]);
 
   return (
-    <Container>
+    <Flex justify="center">
       <SimpleGrid templateColumns="repeat(2, 1fr)" gap={4}>
         {reservationItems?.map((item) => (
           <ReservationItem key={item.idx} reservedItem={item} />
         ))}
       </SimpleGrid>
-    </Container>
+    </Flex>
   );
 };
 

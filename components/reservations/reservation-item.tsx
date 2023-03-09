@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Flex, Text, Button, useToast } from "@chakra-ui/react";
+import { Flex, Text, Button, useToast, Stack } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { ProductType } from "@/types/product-type";
 
@@ -33,11 +33,31 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
   };
 
   return (
-    <Flex direction="column">
-      <Image src={reservedItem.mainImage} alt="" width={300} height={200} />
-      <Text>이름 : {reservedItem.name}</Text>
-      <Text>가격 : {reservedItem.price}</Text>
-      <Button onClick={deleteReservedItemHandler}>삭제</Button>
+    <Flex
+      pb="0.8rem"
+      minW="20rem"
+      direction="column"
+      boxShadow="dark-lg"
+      borderRadius="10px"
+    >
+      <Stack mb="2px" pos="relative" w="full" h="250px">
+        <Image
+          style={{
+            borderTopRightRadius: "10px",
+            borderTopLeftRadius: "10px",
+          }}
+          fill
+          src={reservedItem.mainImage}
+          alt=""
+        />
+      </Stack>
+      <Stack mb="10px" px="10px">
+        <Text>이름 : {reservedItem.name}</Text>
+        <Text>가격 : {reservedItem.price}</Text>
+      </Stack>
+      <Button w="10rem" placeSelf="center" onClick={deleteReservedItemHandler}>
+        삭제
+      </Button>
     </Flex>
   );
 };

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Select } from "@chakra-ui/react";
 import { OptionsType } from "@/helpers/options";
 
@@ -34,4 +34,4 @@ const ShareSelect = ({
   );
 };
 
-export default ShareSelect;
+export default React.memo(ShareSelect);

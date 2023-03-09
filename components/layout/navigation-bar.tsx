@@ -1,6 +1,10 @@
 import React from "react";
 import NextLink from "next/link";
-import { Box, Container, Link } from "@chakra-ui/react";
+import { Box, Flex, Link } from "@chakra-ui/react";
+
+interface NavigationBarProps {
+  inView: boolean;
+}
 
 const routes = [
   {
@@ -13,36 +17,38 @@ const routes = [
   },
 ];
 
-const NavigationBar = () => {
+const NavigationBar = ({ inView }: NavigationBarProps) => {
   return (
     <Box
+      py={10}
       h="3rem"
       pos="fixed"
       top="0"
       left="0"
       right="0"
       zIndex={2}
-      bg="cadetblue"
+      transition="all 0.2s ease-in-out"
+      bg={!inView ? "white" : "transparent"}
+      boxShadow={!inView ? "base" : "none"}
     >
-      <Container
-        float="right"
-        transform="translateY(50%)"
-        display="flex"
-        justifyContent="end"
-      >
+      <Flex h="full" justify="center" align="center">
         {routes.map((route, index) => (
           <Link
             key={index}
             as={NextLink}
             href={route.href}
-            color="white"
-            _hover={{ decoration: "none" }}
-            _first={{ marginRight: "20px" }}
+            mx="20px"
+            fontWeight="bold"
+            transition="color 0.2s ease-in-out"
+            _hover={{
+              decoration: "none",
+              color: "green",
+            }}
           >
             {route.text}
           </Link>
         ))}
-      </Container>
+      </Flex>
     </Box>
   );
 };
