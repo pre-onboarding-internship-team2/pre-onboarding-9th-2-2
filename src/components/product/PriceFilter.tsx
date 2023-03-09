@@ -31,7 +31,7 @@ export default function PriceFilter({ selectPrice, handleSelectPrice }: IProps) 
           max={100000}
           step={10000}
         >
-          <RangeSliderTrack bg="green.200">
+          <RangeSliderTrack bg="gray.200">
             <RangeSliderFilledTrack bg="teal" />
           </RangeSliderTrack>
           <Tooltip
