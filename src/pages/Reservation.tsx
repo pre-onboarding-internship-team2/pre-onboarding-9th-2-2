@@ -3,7 +3,6 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Container,
   Flex,
   Heading,
   Image,
@@ -11,8 +10,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { ICart, IProduct } from '../redux/cart.interface';
 import { useAppDispatch, useAppSelector } from '../redux/hook/redux.hook';
+import { ICart, IProduct } from '../redux/redux.interface';
 import { decrease, increase, remove } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
 
@@ -32,8 +31,8 @@ function Reservation() {
     dispatch(decrease(item));
   };
 
-  const deleteProduct = (id: number) => {
-    dispatch(remove(id));
+  const deleteProduct = (idx: number) => {
+    dispatch(remove(idx));
   };
 
   return (
@@ -43,7 +42,7 @@ function Reservation() {
         <Card
           key={index}
           direction={{ base: 'column', sm: 'row' }}
-          overflow="hidden"
+          overflow="hidxden"
           variant="outline"
           width="600px"
         >
@@ -66,11 +65,11 @@ function Reservation() {
             </CardBody>
 
             <CardFooter justifyContent="center" alignItems="center">
-              <Button onClick={() => decreaseProduct(item)} variant="solid" colorScheme="gray">
+              <Button onClick={() => decreaseProduct(item)} variant="solidx" colorScheme="gray">
                 -
               </Button>
               <Text marginInline="8">{item.count}</Text>
-              <Button onClick={() => increaseProduct(item)} variant="solid" colorScheme="gray">
+              <Button onClick={() => increaseProduct(item)} variant="solidx" colorScheme="gray">
                 +
               </Button>
             </CardFooter>

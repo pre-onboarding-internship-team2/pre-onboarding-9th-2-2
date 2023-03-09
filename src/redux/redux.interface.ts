@@ -15,4 +15,9 @@ export interface ICart extends IProduct {
   count: number;
 }
 
-export const shoppingList: IProduct[] = mockData.travelInfo;
+export interface FilterSpace {
+  space: string;
+  clicked: boolean;
+}
+
+export const productList: IProduct[] = mockData.travelInfo;

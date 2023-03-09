@@ -11,16 +11,28 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { shoppingList } from '../redux/cart.interface';
-import { IProduct } from '../redux/cart.interface';
 import { useAppDispatch } from '../redux/hook/redux.hook';
+import { useAppSelector } from '../redux/hook/redux.hook';
+import { IProduct, productList } from '../redux/redux.interface';
 import { increase } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
 import Modal from './Modal';
 
 function Product() {
+  const spaceFilter = useAppSelector((state) => state.product.spaceFilter);
+  const clickedSpace = spaceFilter
+    .filter((space) => space.clicked == true)
+    .map((target) => target.space);
+
+  const [showProducts, setShowProducts] = useState<IProduct[]>(productList);
+
+  useEffect(() => {
+    console.log('spaces:', clickedSpace);
+    setShowProducts(productList.filter((product) => clickedSpace.includes(product.spaceCategory)));
+  }, [spaceFilter]);
+
   const dispatch = useAppDispatch();
 
   const onClickHandle = (item: IProduct) => {
@@ -32,7 +44,7 @@ function Product() {
   return (
     <Flex justifyContent={'center'}>
       <SimpleGrid mb={20} spacing={10} templateColumns="repeat(4, minmax(280px, 1fr))">
-        {shoppingList.map((item, index) => (
+        {showProducts.map((item, index) => (
           <Card
             backgroundImage={`linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url("${item.mainImage}")`}
             key={index}

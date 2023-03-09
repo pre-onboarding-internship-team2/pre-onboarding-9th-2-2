@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-import { IProduct } from '../redux/cart.interface';
+import { IProduct } from '../redux/redux.interface';
 
 const TravelModal = ({
   selected,
