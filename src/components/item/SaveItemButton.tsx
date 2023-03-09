@@ -1,4 +1,4 @@
-import { ItemType, toSavedItemType } from "../../types/Item.type";
+import { ItemType } from "../../types/Item.type";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { addToReserVation } from "../../store/reservation/reservationSlice";
 import { Button, useToast } from "@chakra-ui/react";
@@ -10,7 +10,7 @@ const AddButton = ({ item }: { item: ItemType }) => {
   );
 
   const dispatch = useAppDispatch();
-  const handleAddToRV = (item: toSavedItemType) => {
+  const handleAddToReservation = (item: ItemType) => {
     dispatch(addToReserVation(item));
     toast({
       title: "상품이 성공적으로 장바구니에 담겼습니다.",
@@ -26,7 +26,7 @@ const AddButton = ({ item }: { item: ItemType }) => {
       backgroundColor="#C0D1FF"
       borderRadius="5"
       onClick={() => {
-        handleAddToRV(item);
+        handleAddToReservation(item);
       }}
     >
       예약하기

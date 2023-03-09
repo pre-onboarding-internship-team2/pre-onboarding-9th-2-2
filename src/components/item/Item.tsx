@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "./Modal";
-import { ItemType, toSavedItemType } from "../../types/Item.type";
+import { ItemType } from "../../types/Item.type";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { Text, Image, GridItem, Box, useDisclosure } from "@chakra-ui/react";
 import AddButton from "./SaveItemButton";

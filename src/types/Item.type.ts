@@ -7,18 +7,11 @@ export type ItemType = {
   price: number;
   maximumPurchases: number;
   registrationDate: string;
+  quantity: number;
+  // available: boolean;
 };
 
 export type savedItemType = {
-  idx: number;
-  name: string;
-  price: number;
-  maximumPurchases: number;
+  item: ItemType;
   quantity: number;
-  available: boolean;
 };
-
-export type toSavedItemType = Pick<
-  ItemType,
-  "idx" | "name" | "price" | "maximumPurchases"
->;
