@@ -72,31 +72,36 @@
 
 ```
 📦src
- ┣ 📂components              // 페이지 구성하는 컴포넌트
- ┃ ┣ 📂filters               // 필터 컴포넌트
- ┃ ┃ ┣ 📜LocationFilter.tsx
- ┃ ┃ ┗ 📜PriceFilter.tsx
- ┃ ┣ 📜Cart.tsx
- ┃ ┣ 📜Header.tsx
- ┃ ┣ 📜Modal.tsx
- ┃ ┗ 📜Product.tsx
- ┣ 📂pages                    // 페이지 컴포넌트
- ┃ ┣ 📜Main.tsx
- ┃ ┣ 📜NotFound.tsx
- ┃ ┗ 📜Reservation.tsx
- ┣ 📂redux                    // 여행 상품 정보 및 장바구니 상태 관리
- ┃ ┣ 📂hook
- ┃ ┃ ┗ 📜redux.hook.ts
- ┃ ┣ 📂slice
- ┃ ┃ ┣ 📜cartslice.ts
- ┃ ┃ ┗ 📜productslice.ts
- ┃ ┣ 📜mock_data.json
- ┃ ┣ 📜redux.interface.ts
- ┃ ┗ 📜store.ts
- ┣ 📂utils
- ┃ ┣ 📜Router.tsx              // 라우팅 처리 컴포넌트
- ┃ ┗ 📜formatCurrency.ts
- ┗ 📜App.tsx
+┣ 📂components // 페이지 구성하는 컴포넌트
+┃ ┣ 📂cart
+┃ ┃ ┣ 📜Cart.tsx
+┃ ┃ ┗ 📜EmptyCart.tsx
+┃ ┣ 📂filters // 지역, 가격 필터 컴포넌트
+┃ ┃ ┣ 📜Location.tsx
+┃ ┃ ┣ 📜Price.tsx
+┃ ┃ ┗ 📜PriceRangeSlider.tsx
+┃ ┣ 📜Filter.tsx
+┃ ┣ 📜Header.tsx
+┃ ┣ 📜Modal.tsx
+┃ ┗ 📜Product.tsx
+┣ 📂hooks
+┣ 📂pages
+┃ ┣ 📜Main.tsx
+┃ ┣ 📜NotFound.tsx
+┃ ┗ 📜Reservation.tsx
+┣ 📂redux // 여행 상품 정보 및 장바구니 상태 관리
+┃ ┣ 📂hook
+┃ ┃ ┗ 📜redux.hook.ts
+┃ ┣ 📂slice
+┃ ┃ ┣ 📜cartslice.ts
+┃ ┃ ┗ 📜productslice.ts
+┃ ┣ 📜mock_data.json
+┃ ┣ 📜redux.interface.ts
+┃ ┗ 📜store.ts
+┣ 📂utils
+┃ ┗ 📜formatCurrency.ts
+┣ 📜App.tsx
+┗ 📜Router.tsx
 ```
 
 ## commit convention
@@ -112,7 +117,7 @@
 
 ## 사용한 라이브러리
 
-- 코어 및 프레임워크: Vite & React
-- 상태관리: Redux
-- 스타일링: chakra-ui
+- 코어 및 프레임워크: Vite & React, Typescript
+- 상태관리: Redux(Redux/toolkit)
+- 스타일링: chakra-ui, react-icons, react-toastify
 - React-router-dom
