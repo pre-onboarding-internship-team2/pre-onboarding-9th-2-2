@@ -18,12 +18,13 @@ import { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '../redux/hook/redux.hook';
 import { useAppSelector } from '../redux/hook/redux.hook';
-import { IProduct, productList } from '../redux/redux.interface';
+import { IProduct } from '../redux/redux.interface';
 import { increase } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
 import ProductModal from './Modal';
 
 function Product() {
+  const productList = useAppSelector((state) => state.product.products);
   const locationFilter = useAppSelector((state) => state.product.locationFilter);
   const priceFilter = useAppSelector((state) => state.product.priceFilter);
 

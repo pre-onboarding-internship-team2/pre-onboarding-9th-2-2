@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/react';
 import LocationFilter from './filters/Location';
 import PriceFilter from './filters/Price';
 
-function SideFilter() {
+function Filter() {
   return (
     <Flex flexDir={'row'} width="full" mb={8}>
       <LocationFilter />
@@ -12,4 +12,4 @@ function SideFilter() {
   );
 }
 
-export default SideFilter;
+export default Filter;

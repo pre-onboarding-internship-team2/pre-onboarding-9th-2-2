@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useAppDispatch, useAppSelector } from '../redux/hook/redux.hook';
-import { ICart, IProduct } from '../redux/redux.interface';
+import { ICart } from '../redux/redux.interface';
 import { decrease, increase, remove } from '../redux/slice/cartslice';
 import { formatCurrency } from '../utils/formatCurrency';
 
