@@ -21,12 +21,6 @@ const router = createBrowserRouter([
   {
     path: '/reservation',
     element: <Reservation />,
-    children: [
-      {
-        path: 'empty',
-        element: <EmptyCart />,
-      },
-    ],
   },
 ]);
 
