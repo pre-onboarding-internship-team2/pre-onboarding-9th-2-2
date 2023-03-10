@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const fetchData = createAsyncThunk("data/fetchData", async () => {
   try {
-    const result = await axios.get("/src/mock_data.json");
+    const result = await axios.get("/public/mock_data.json");
     return result.data;
   } catch (error: any) {
     return error.message;
