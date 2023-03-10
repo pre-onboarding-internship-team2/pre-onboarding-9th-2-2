@@ -1,4 +1,7 @@
+import ReservationButton from "./ReservationButton";
 import { ItemType } from "../../types/Item.type";
+import { formatCurrency } from "../../utils/formatCurrency";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import {
   Modal as ModalUI,
   ModalOverlay,
@@ -12,11 +15,8 @@ import {
   List,
   ListItem,
   ListIcon,
+  Text,
 } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
-import { formatCurrency } from "../../utils/formatCurrency";
-import ReservationButton from "./ReservationButton";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 interface Props {
   isOpen: boolean;
