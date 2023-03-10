@@ -4,28 +4,22 @@ import { Box, Grid } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "../hooks/useRedux";
 import { fetchItems } from "../store/item/itemSlice";
 import Item from "../components/item/Item";
-
 import SpaceCategorySearch from "../components/search/SpaceCategorySearch";
 import PriceRangeSearch from "../components/search/PriceRangeSearch";
-import { PriceRange } from "../types/priceRange.type";
+import filterFunc from "../utils/filterFunc";
 
 const MainPage = () => {
-  const item_list = useAppSelector((state) => state.item.items);
   const dispatch = useAppDispatch();
+  const item_list = useAppSelector((state) => state.item.items);
 
-  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const [categoryFilter, setCategoryFilter] = useState<string[]>([]);
   const [priceFilter, setPriceFilter] = useState<number[]>([0, 120]);
 
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
 
-  const startPoint = PriceRange.find(
-    (val) => val.range === priceFilter[0]
-  )?.price;
-  const endPoint = PriceRange.find(
-    (val) => val.range === priceFilter[1]
-  )?.price;
+  const filterdArray = filterFunc({ categoryFilter, priceFilter, item_list });
 
   return (
     <>
@@ -47,26 +41,9 @@ const MainPage = () => {
       </Box>
 
       <Grid templateColumns="repeat(3, 1fr)" gap={8} py="50px">
-        {categoryFilter === "All"
-          ? item_list
-              ?.filter((item: ItemType) => {
-                return (
-                  item.price >= (startPoint ? startPoint : 0) &&
-                  item.price <= (endPoint ? endPoint : 0)
-                );
-              })
-              ?.map((item: ItemType) => <Item key={item.idx} item={item} />)
-          : item_list
-              ?.filter((item: ItemType) =>
-                item.spaceCategory.includes(categoryFilter)
-              )
-              ?.filter((item: ItemType) => {
-                return (
-                  item.price >= (startPoint ? startPoint : 0) &&
-                  item.price <= (endPoint ? endPoint : 0)
-                );
-              })
-              .map((item: ItemType) => <Item key={item.idx} item={item} />)}
+        {filterdArray.map((item: ItemType) => (
+          <Item key={item.idx} item={item} />
+        ))}
       </Grid>
     </>
   );
