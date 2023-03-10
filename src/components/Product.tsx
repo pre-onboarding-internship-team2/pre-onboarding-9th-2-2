@@ -34,6 +34,7 @@ function Product() {
         return;
       }
     }
+    toast.success('상품을 장바구니에 담았습니다.');
     dispatch(increase(item));
   };
 
@@ -114,7 +115,7 @@ function Product() {
         draggable
         pauseOnHover
         theme="light"
-        limit={1}
+        limit={2}
       />
     </Flex>
   );

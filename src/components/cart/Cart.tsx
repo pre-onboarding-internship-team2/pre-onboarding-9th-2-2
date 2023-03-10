@@ -2,7 +2,7 @@ import { Box, Button } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '../redux/hook/redux.hook';
+import { useAppSelector } from '../../redux/hook/redux.hook';
 
 function Cart() {
   const cartProducts = useAppSelector((state) => state.cart);
