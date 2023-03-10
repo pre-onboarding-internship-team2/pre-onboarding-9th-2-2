@@ -1,5 +1,5 @@
-import { Checkbox } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction } from "react";
+import { Checkbox } from "@chakra-ui/react";
 
 interface ShareCheckboxProps {
   data: string;

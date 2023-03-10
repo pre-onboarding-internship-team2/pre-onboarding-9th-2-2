@@ -12,20 +12,16 @@ import { useQuery } from "@tanstack/react-query";
 import { ProductType } from "@/types/product.type";
 import ReservationItem from "./reservation-item";
 
-interface ReservationsListProps {
-  data: ProductType[];
-}
-
-const ReservationsList = ({ data }: ReservationsListProps) => {
-  const [reservationItems, setReservationItems] = useState(data);
-
+const ReservationsList = () => {
   const { data: carts } = useQuery<ProductType[]>(
     ["carts"],
     () =>
       fetch(`/api/reservations`)
         .then((res) => res.json())
         .then((data) => data.cart),
-    { staleTime: Infinity },
+    {
+      staleTime: Infinity,
+    },
   );
 
   useEffect(() => {
@@ -46,15 +42,17 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
     }
   }, [carts]);
 
+  const [reservationItems, setReservationItems] = useState(carts);
+
   const totalQuantity =
-    reservationItems.length > 0
+    reservationItems && reservationItems.length > 0
       ? reservationItems
           .map((item) => item.quantity)
           .reduce((acc, cur) => acc + cur, 0)
       : 0;
 
   const totalPrice =
-    reservationItems.length > 0
+    reservationItems && reservationItems.length > 0
       ? reservationItems
           .map((item) => item.price * item.quantity)
           .reduce((acc, cur) => acc + cur, 0)
@@ -73,15 +71,16 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
         </Stat>
       </StatGroup>
       <Flex p="10px" justify="center">
-        {reservationItems.length === 0 ? (
+        {reservationItems && reservationItems.length === 0 ? (
           <Heading pt="50px" as="h2" size="xl">
             예약된 상품이 없습니다.
           </Heading>
         ) : (
           <SimpleGrid templateColumns="repeat(2, 1fr)" gap={4}>
-            {reservationItems?.map((item) => (
-              <ReservationItem key={item.idx} reservedItem={item} />
-            ))}
+            {reservationItems &&
+              reservationItems?.map((item) => (
+                <ReservationItem key={item.idx} reservedItem={item} />
+              ))}
           </SimpleGrid>
         )}
       </Flex>

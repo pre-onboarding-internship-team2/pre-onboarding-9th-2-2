@@ -1,5 +1,5 @@
-import { Stack } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import { Stack } from "@chakra-ui/react";
 import NavigationBar from "./navigation-bar";
 
 interface LayoutProps {

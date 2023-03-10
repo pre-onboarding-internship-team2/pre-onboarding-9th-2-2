@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import {
   Flex,
@@ -9,7 +9,7 @@ import {
   Badge,
   HStack,
 } from "@chakra-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { ProductType } from "@/types/product.type";
 import {
   deleteReservedItem,
@@ -21,13 +21,24 @@ interface ReservationItemProps {
 }
 
 const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
-  const [count, setCount] = useState(reservedItem.quantity as number);
   const queryClient = useQueryClient();
   const toast = useToast();
+  const deleteMutation = useMutation({
+    mutationFn: (data: { deletedId: number }) => {
+      return deleteReservedItem(data);
+    },
+    onSettled: () => queryClient.invalidateQueries(["carts"]),
+  });
+  const updateMutation = useMutation({
+    mutationFn: (data: { idx: number; quantity: number }) => {
+      return updateReservedItem(data);
+    },
+    onSettled: () => queryClient.invalidateQueries(["carts"]),
+  });
 
   const deleteReservedItemHandler = async () => {
     const deletedId = reservedItem.idx;
-    await deleteReservedItem({ deletedId }).then((res) => {
+    await deleteMutation.mutateAsync({ deletedId }).then((res) => {
       if (res.status === 200) {
         toast({
           title: "Product Removed.",
@@ -38,7 +49,6 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
         });
       }
     });
-    queryClient.invalidateQueries({ queryKey: ["carts"] });
   };
 
   const updateReservedItemHandler = async (
@@ -47,13 +57,16 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
     e.stopPropagation();
     const { name } = e.currentTarget;
     if (name === "count-up") {
-      setCount((prev) => prev + 1);
-      await updateReservedItem({ idx: reservedItem.idx, quantity: count + 1 });
+      await updateMutation.mutateAsync({
+        idx: reservedItem.idx,
+        quantity: reservedItem.quantity + 1,
+      });
     } else {
-      setCount((prev) => prev - 1);
-      await updateReservedItem({ idx: reservedItem.idx, quantity: count - 1 });
+      await updateMutation.mutateAsync({
+        idx: reservedItem.idx,
+        quantity: reservedItem.quantity - 1,
+      });
     }
-    queryClient.invalidateQueries({ queryKey: ["carts"] });
   };
 
   return (
@@ -90,17 +103,17 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
           onClick={(e) => updateReservedItemHandler(e)}
           variant="outline"
           colorScheme="teal"
-          isDisabled={count === 1}
+          isDisabled={reservedItem.quantity === 1}
         >
           -
         </Button>
-        <Text>{count}</Text>
+        <Text>{reservedItem.quantity}</Text>
         <Button
           name="count-up"
           onClick={(e) => updateReservedItemHandler(e)}
           variant="outline"
           colorScheme="teal"
-          isDisabled={count === reservedItem.maximumPurchases}
+          isDisabled={reservedItem.quantity === reservedItem.maximumPurchases}
         >
           +
         </Button>

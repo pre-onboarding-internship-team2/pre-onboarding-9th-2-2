@@ -40,7 +40,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const filePath = buildCartPath();
       const data = extractCart(filePath);
-      res.status(200).json({ cart: data });
+      return res.status(200).json({ cart: data });
     } catch (error) {
       return res.status(500).send("Error revalidating");
     }
