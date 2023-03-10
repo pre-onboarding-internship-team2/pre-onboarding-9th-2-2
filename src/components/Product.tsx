@@ -27,12 +27,10 @@ function Product() {
 
   const dispatch = useAppDispatch();
   const onClickHandle = (item: IProduct) => {
-    if (cartList) {
-      const product = cartList.find((product) => product.idx == item.idx);
-      if (product?.count == item.maximumPurchases) {
-        toast.error('예약 가능 수량을 초과하였습니다.');
-        return;
-      }
+    const product = cartList.find((product) => product.idx == item.idx);
+    if (product && product?.count == item.maximumPurchases) {
+      toast.error('예약 가능 수량을 초과하였습니다.');
+      return;
     }
     toast.success('상품을 장바구니에 담았습니다.');
     dispatch(increase(item));
