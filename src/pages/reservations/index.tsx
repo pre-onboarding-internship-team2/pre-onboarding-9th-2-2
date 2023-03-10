@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import LayoutRoot from "../_layout";
 import ReservationBill from "@/components/ReservationBill";
-import ReservationList from "@/components/ReservationLIst";
+import ReservationList from "@/components/ReservationList";
 
 export default function ReservationsPage() {
   return (
