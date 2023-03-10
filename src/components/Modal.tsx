@@ -43,7 +43,7 @@ const ProductModal = ({
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="linkedin" mr={3} onClick={onClose}>
+          <Button colorScheme="facebook" mr={3} onClick={onClose}>
             닫기
           </Button>
           <Link to="/reservation">

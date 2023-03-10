@@ -2,19 +2,17 @@ import {
   Badge,
   Box,
   Button,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Flex,
   Heading,
   SimpleGrid,
   Stack,
   Tag,
   Text,
-  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useAppDispatch } from '../redux/hook/redux.hook';
 import { useAppSelector } from '../redux/hook/redux.hook';
@@ -24,29 +22,18 @@ import { formatCurrency } from '../utils/formatCurrency';
 import ProductModal from './Modal';
 
 function Product() {
-  const productList = useAppSelector((state) => state.product.products);
-  const locationFilter = useAppSelector((state) => state.product.locationFilter);
-  const priceFilter = useAppSelector((state) => state.product.priceFilter);
-
-  const clickedLoaction = locationFilter
-    .filter((location) => location.clicked == true)
-    .map((target) => target.location);
-
-  const [showProducts, setShowProducts] = useState<IProduct[]>(productList);
-  useEffect(() => {
-    setShowProducts((prev) => {
-      const locationFiltered = productList.filter((product) =>
-        clickedLoaction.includes(product.spaceCategory)
-      );
-      const finalFiltered = locationFiltered.filter(
-        (product) => product.price >= priceFilter.min && product.price <= priceFilter.max
-      );
-      return finalFiltered;
-    });
-  }, [locationFilter, priceFilter]);
+  const productList = useAppSelector((state) => state.product);
+  const cartList = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
   const onClickHandle = (item: IProduct) => {
+    if (cartList) {
+      const product = cartList.find((product) => product.idx == item.idx);
+      if (product?.count == item.maximumPurchases) {
+        toast.error('예약 가능 수량을 초과하였습니다.');
+        return;
+      }
+    }
     dispatch(increase(item));
   };
 
@@ -56,7 +43,7 @@ function Product() {
   return (
     <Flex>
       <SimpleGrid mb={20} spacing={10} templateColumns="repeat(4, minmax(280px, 1fr))">
-        {showProducts.map((item, index) => (
+        {productList.map((item, index) => (
           <Box
             display={'flex'}
             flexDir={'column'}
@@ -116,6 +103,19 @@ function Product() {
           </Box>
         ))}
       </SimpleGrid>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        limit={1}
+      />
     </Flex>
   );
 }

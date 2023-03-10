@@ -6,18 +6,28 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
 } from '@chakra-ui/react';
+// import { price } from '../../redux/slice/productslice';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { useAppDispatch, useAppSelector } from '../../redux/hook/redux.hook';
-import { maxPrice, priceStep, priceSteps } from '../../redux/redux.interface';
-import { price } from '../../redux/slice/productslice';
+import { IPrice, maxPrice, priceStep, priceSteps } from '../../redux/redux.interface';
+import { setPrice } from '../../redux/slice/productslice';
 
 function PriceRangeSlider() {
-  const priceFilter = useAppSelector((state) => state.product.priceFilter);
+  const [priceFilter, setPriceFilter] = useState<IPrice>({ min: 0, max: maxPrice });
 
-  const dispatch = useAppDispatch();
   const sliderChange = (priceRange: number[]) => {
-    dispatch(price(priceRange));
+    setPriceFilter({
+      min: priceRange[0],
+      max: priceRange[1],
+    });
   };
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setPrice(priceFilter));
+  }, [priceFilter]);
+
   return (
     <>
       <RangeSlider

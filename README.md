@@ -68,6 +68,37 @@
   </tr>
 </table>
 
+# 프로젝트 구조
+
+```
+📦src
+ ┣ 📂components              // 페이지 구성하는 컴포넌트
+ ┃ ┣ 📂filters               // 필터 컴포넌트
+ ┃ ┃ ┣ 📜LocationFilter.tsx
+ ┃ ┃ ┗ 📜PriceFilter.tsx
+ ┃ ┣ 📜Cart.tsx
+ ┃ ┣ 📜Header.tsx
+ ┃ ┣ 📜Modal.tsx
+ ┃ ┗ 📜Product.tsx
+ ┣ 📂pages                    // 페이지 컴포넌트
+ ┃ ┣ 📜Main.tsx
+ ┃ ┣ 📜NotFound.tsx
+ ┃ ┗ 📜Reservation.tsx
+ ┣ 📂redux                    // 여행 상품 정보 및 장바구니 상태 관리
+ ┃ ┣ 📂hook
+ ┃ ┃ ┗ 📜redux.hook.ts
+ ┃ ┣ 📂slice
+ ┃ ┃ ┣ 📜cartslice.ts
+ ┃ ┃ ┗ 📜productslice.ts
+ ┃ ┣ 📜mock_data.json
+ ┃ ┣ 📜redux.interface.ts
+ ┃ ┗ 📜store.ts
+ ┣ 📂utils
+ ┃ ┣ 📜Router.tsx              // 라우팅 처리 컴포넌트
+ ┃ ┗ 📜formatCurrency.ts
+ ┗ 📜App.tsx
+```
+
 ## commit convention
 
 | Tag Name | Description      |
@@ -79,8 +110,9 @@
 | docs     | 문서수정         |
 | chores   | 기타 수정사항    |
 
-## 사용 라이브러리
+## 사용한 라이브러리
 
-react-router-dom version 6
-react-icons
-redux
+- 코어 및 프레임워크: Vite & React
+- 상태관리: Redux
+- 스타일링: chakra-ui
+- React-router-dom

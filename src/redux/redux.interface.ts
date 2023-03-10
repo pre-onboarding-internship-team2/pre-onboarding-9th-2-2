@@ -20,16 +20,22 @@ export interface ILocationFilter {
   clicked: boolean;
 }
 
+export type IPrice = {
+  min: number;
+  max: number;
+};
+
 export const productList: IProduct[] = mockData.travelInfo;
+
+const locationCategory = [...new Set(productList.map((product) => product.spaceCategory))] as const;
+export const locationInit = locationCategory.map((a) => ({
+  ['location']: a,
+  ['clicked']: true,
+})) as ILocationFilter[];
 
 const uniquePrices = [...new Set(productList.map((product) => product.price))].sort(
   (a, b) => a - b
 );
 export const priceSteps = uniquePrices.filter((_, i) => i % 2 == 0);
-
-export type IPrice = {
-  min: number;
-  max: number;
-};
 export const maxPrice = Math.max(...uniquePrices);
 export const priceStep = priceSteps[0];
