@@ -53,6 +53,7 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
       setCount((prev) => prev - 1);
       await updateReservedItem({ idx: reservedItem.idx, quantity: count - 1 });
     }
+    queryClient.invalidateQueries({ queryKey: ["carts"] });
   };
 
   return (
@@ -80,6 +81,7 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
         </Badge>
         <Text>이름 : {reservedItem.name}</Text>
         <Text>등록 번호 : {reservedItem.idx}</Text>
+        <Text>최대 수량 : {reservedItem.maximumPurchases}</Text>
         <Text>가격 : {reservedItem.price}</Text>
       </Stack>
       <HStack mb={5} placeSelf="center" spacing={5}>

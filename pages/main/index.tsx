@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { ProductType } from "@/types/product.type";
 import ShareSelect from "@/components/common/share-select";
 import ProductsList from "@/components/products/products-list";
@@ -33,7 +33,7 @@ const MainPage: NextPage<MainPageProps> = ({ products }) => {
             : true;
 
         const locationCondition =
-          locations.length > 0 && locations.includes(cur.spaceCategory);
+          locations.length === 0 || locations.includes(cur.spaceCategory);
 
         if (priceCondition && locationCondition) {
           acc.push(cur);
@@ -69,7 +69,13 @@ const MainPage: NextPage<MainPageProps> = ({ products }) => {
         options={priceOptions}
         placeholder="가격"
       />
-      <ProductsList products={filteredProducts} />
+      {filteredProducts.length === 0 ? (
+        <Heading pt="50px" as="h2" size="xl" textAlign="center">
+          상품이 없습니다
+        </Heading>
+      ) : (
+        <ProductsList products={filteredProducts} />
+      )}
     </>
   );
 };

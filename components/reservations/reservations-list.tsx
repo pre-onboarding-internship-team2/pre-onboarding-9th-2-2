@@ -6,6 +6,7 @@ import {
   StatNumber,
   Flex,
   SimpleGrid,
+  Heading,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { ProductType } from "@/types/product.type";
@@ -45,10 +46,17 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
     }
   }, [carts]);
 
+  const totalQuantity =
+    reservationItems.length > 0
+      ? reservationItems
+          .map((item) => item.quantity)
+          .reduce((acc, cur) => acc + cur, 0)
+      : 0;
+
   const totalPrice =
     reservationItems.length > 0
       ? reservationItems
-          .map((item) => item.price)
+          .map((item) => item.price * item.quantity)
           .reduce((acc, cur) => acc + cur, 0)
       : 0;
 
@@ -57,7 +65,7 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
       <StatGroup>
         <Stat mr={4} display="flex" justifyContent="flex-end">
           <StatLabel>총 개수</StatLabel>
-          <StatNumber>{reservationItems.length}</StatNumber>
+          <StatNumber>{totalQuantity}</StatNumber>
         </Stat>
         <Stat ml={4}>
           <StatLabel>총 비용</StatLabel>
@@ -65,11 +73,17 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
         </Stat>
       </StatGroup>
       <Flex p="10px" justify="center">
-        <SimpleGrid templateColumns="repeat(2, 1fr)" gap={4}>
-          {reservationItems?.map((item) => (
-            <ReservationItem key={item.idx} reservedItem={item} />
-          ))}
-        </SimpleGrid>
+        {reservationItems.length === 0 ? (
+          <Heading pt="50px" as="h2" size="xl">
+            예약된 상품이 없습니다.
+          </Heading>
+        ) : (
+          <SimpleGrid templateColumns="repeat(2, 1fr)" gap={4}>
+            {reservationItems?.map((item) => (
+              <ReservationItem key={item.idx} reservedItem={item} />
+            ))}
+          </SimpleGrid>
+        )}
       </Flex>
     </>
   );

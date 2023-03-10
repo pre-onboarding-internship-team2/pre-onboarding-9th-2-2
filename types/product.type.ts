@@ -7,5 +7,5 @@ export interface ProductType {
   price: number;
   maximumPurchases: number;
   registrationDate?: string;
-  quantity?: number;
+  quantity: number;
 }
