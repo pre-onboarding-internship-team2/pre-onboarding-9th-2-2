@@ -9,7 +9,7 @@ import router from './utils/Router';
 const theme = extendTheme({
   colors: {
     brand: {
-      main: '#789BFB',
+      main: '#304E89',
     },
   },
 });

@@ -1,21 +1,15 @@
 import { Flex } from '@chakra-ui/react';
 
-import Cart from '../components/Cart';
 import Header from '../components/Header';
 import Product from '../components/Product';
-import LocationFilter from '../components/filters/LocationFilter';
-import PriceFilter from '../components/filters/PriceFilter';
+import SideFilter from '../components/SideFilter';
 
 function Main() {
   return (
-    <Flex flexDirection={'column'} m={10}>
+    <Flex flexDirection={'column'} mx={20} my={10}>
       <Header />
-      <Flex flexDirection={'column'} mx={10}>
-        <Flex my={10} justifyContent={'space-between'}>
-          <LocationFilter />
-          <PriceFilter />
-          <Cart />
-        </Flex>
+      <Flex w="full" flexDirection={'column'} mt={10}>
+        <SideFilter />
         <Product />
       </Flex>
     </Flex>

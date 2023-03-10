@@ -33,4 +33,3 @@ export type IPrice = {
 };
 export const maxPrice = Math.max(...uniquePrices);
 export const priceStep = priceSteps[0];
-console.log(priceStep);

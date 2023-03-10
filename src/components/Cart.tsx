@@ -13,15 +13,15 @@ function Cart() {
   return (
     <Link to="/reservation">
       <Button outline="none" boxShadow="none" rightIcon={<AiOutlineShoppingCart />}>
-        My Cart
+        장바구니
       </Button>
       <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
         position="absolute"
-        right="70px"
-        top="100px"
+        right="90px"
+        top="8px"
         width="20px"
         background="#383e47"
         borderRadius="100%"

@@ -1,16 +1,20 @@
-import { Box, Button, Flex, Heading } from '@chakra-ui/react';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Flex, Heading } from '@chakra-ui/react';
 
-import { useAppSelector } from '../redux/hook/redux.hook';
+import Cart from './Cart';
 
 function Header() {
   return (
-    <Flex mx={10} flexDirection="row" justifyContent={'center'} alignItems={'center'}>
-      <Heading my={3} mx={3} color="brand.main" justifyContent={'center'}>
+    <Flex
+      px={5}
+      flexDirection="row"
+      alignItems={'center'}
+      backgroundColor="brand.main"
+      justifyContent={'space-between'}
+    >
+      <Heading my={3} color="brand.main" textColor={'white'}>
         Like a LOCAL
       </Heading>
-      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}></Flex>
+      <Cart />
     </Flex>
   );
 }

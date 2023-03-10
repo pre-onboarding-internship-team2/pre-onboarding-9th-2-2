@@ -26,8 +26,6 @@ export const productSlice = createSlice({
       };
     },
     price: (state, action) => {
-      console.log(action.payload[0]);
-      console.log(action.payload[1]);
       return {
         ...state,
         priceFilter: {

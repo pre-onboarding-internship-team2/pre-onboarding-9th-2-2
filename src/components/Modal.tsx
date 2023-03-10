@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { IProduct } from '../redux/redux.interface';
+import { formatCurrency } from '../utils/formatCurrency';
 
 const ProductModal = ({
   selected,
@@ -24,7 +25,7 @@ const ProductModal = ({
   onClose: () => void;
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontSize="28px" fontWeight="800" marginBottom="2px" marginTop="30px">
@@ -42,7 +43,7 @@ const ProductModal = ({
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
+          <Button colorScheme="linkedin" mr={3} onClick={onClose}>
             닫기
           </Button>
           <Link to="/reservation">
