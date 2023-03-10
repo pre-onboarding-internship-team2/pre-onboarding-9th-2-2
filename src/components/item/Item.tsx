@@ -4,7 +4,6 @@ import { ItemType } from "../../types/Item.type";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {
   Card,
-  CardHeader,
   CardBody,
   Text,
   Image,
@@ -12,12 +11,10 @@ import {
   Box,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useAppSelector } from "../../hooks/useRedux";
 import ReservationButton from "./ReservationButton";
 
 const Item = ({ item }: { item: ItemType }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const savedItems = useAppSelector((state) => state.reservation.savedItems);
 
   return (
     <GridItem>
@@ -70,7 +67,15 @@ const Item = ({ item }: { item: ItemType }) => {
               </Box>
             </Box>
 
-            <Text fontSize="16px" fontWeight="500">
+            <Text
+              fontSize="16px"
+              fontWeight="500"
+              width="268px"
+              height="24px"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
               {item.name}
             </Text>
             <Text fontSize="24px" fontWeight="700">

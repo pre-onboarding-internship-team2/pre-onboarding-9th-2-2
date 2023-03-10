@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ItemType } from "../../types/Item.type";
-
-interface SavedItemsState {
-  savedItems: ItemType[];
-  totalQuantity: number;
-  totalAmount: number;
-}
+import { SavedItemsState } from "../../types/Item.type";
 
 const initialState = {
   savedItems: localStorage.getItem("savedItems")

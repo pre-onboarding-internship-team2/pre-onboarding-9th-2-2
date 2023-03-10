@@ -9,3 +9,14 @@ export type ItemType = {
   registrationDate: string;
   quantity: number;
 };
+
+export interface ItemsState {
+  items: [];
+  status: "pending" | "succeeded" | "failed";
+}
+
+export interface SavedItemsState {
+  savedItems: ItemType[];
+  totalQuantity: number;
+  totalAmount: number;
+}

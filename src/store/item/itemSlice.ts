@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import mockData from "../../data/mockData.json";
-
-interface ItemsState {
-  items: [];
-  status: "pending" | "succeeded" | "failed";
-}
+import { ItemsState } from "../../types/Item.type";
 
 const initialState = {
   items: [],
