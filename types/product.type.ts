@@ -5,6 +5,7 @@ export interface ProductType {
   description?: string;
   spaceCategory: string;
   price: number;
-  maximumPurchases?: number;
+  maximumPurchases: number;
   registrationDate?: string;
+  quantity?: number;
 }

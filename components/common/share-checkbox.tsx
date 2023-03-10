@@ -1,4 +1,3 @@
-import { OptionsType } from "@/helpers/options";
 import { Checkbox } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction } from "react";
 
@@ -33,4 +32,4 @@ const ShareCheckbox = ({
   );
 };
 
-export default ShareCheckbox;
+export default React.memo(ShareCheckbox);

@@ -11,6 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ProductType } from "@/types/product.type";
+import { reserveItem } from "@/helpers/reserve-action";
 
 interface ProductItemProps {
   product: ProductType;
@@ -21,10 +22,7 @@ const ProductItem = ({ product, showModal }: ProductItemProps) => {
   const toast = useToast();
 
   const addToCart = async () => {
-    await fetch(`/api/reservations`, {
-      method: "POST",
-      body: JSON.stringify(product),
-    }).then((res) => {
+    await reserveItem(product).then((res) => {
       if (res.status === 201) {
         toast({
           title: "Product Reserved.",

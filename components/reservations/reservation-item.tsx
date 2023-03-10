@@ -1,24 +1,33 @@
+import React, { useState } from "react";
 import Image from "next/image";
-import { Flex, Text, Button, useToast, Stack, Badge } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Button,
+  useToast,
+  Stack,
+  Badge,
+  HStack,
+} from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { ProductType } from "@/types/product.type";
+import {
+  deleteReservedItem,
+  updateReservedItem,
+} from "@/helpers/reserve-action";
 
 interface ReservationItemProps {
   reservedItem: ProductType;
 }
 
 const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
+  const [count, setCount] = useState(reservedItem.quantity as number);
   const queryClient = useQueryClient();
   const toast = useToast();
 
   const deleteReservedItemHandler = async () => {
     const deletedId = reservedItem.idx;
-    await fetch(`/api/reservations`, {
-      method: "DELETE",
-      body: JSON.stringify({
-        deletedId,
-      }),
-    }).then((res) => {
+    await deleteReservedItem({ deletedId }).then((res) => {
       if (res.status === 200) {
         toast({
           title: "Product Removed.",
@@ -30,6 +39,20 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
       }
     });
     queryClient.invalidateQueries({ queryKey: ["carts"] });
+  };
+
+  const updateReservedItemHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.stopPropagation();
+    const { name } = e.currentTarget;
+    if (name === "count-up") {
+      setCount((prev) => prev + 1);
+      await updateReservedItem({ idx: reservedItem.idx, quantity: count + 1 });
+    } else {
+      setCount((prev) => prev - 1);
+      await updateReservedItem({ idx: reservedItem.idx, quantity: count - 1 });
+    }
   };
 
   return (
@@ -59,6 +82,27 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
         <Text>등록 번호 : {reservedItem.idx}</Text>
         <Text>가격 : {reservedItem.price}</Text>
       </Stack>
+      <HStack mb={5} placeSelf="center" spacing={5}>
+        <Button
+          name="count-down"
+          onClick={(e) => updateReservedItemHandler(e)}
+          variant="outline"
+          colorScheme="teal"
+          isDisabled={count === 1}
+        >
+          -
+        </Button>
+        <Text>{count}</Text>
+        <Button
+          name="count-up"
+          onClick={(e) => updateReservedItemHandler(e)}
+          variant="outline"
+          colorScheme="teal"
+          isDisabled={count === reservedItem.maximumPurchases}
+        >
+          +
+        </Button>
+      </HStack>
       <Button w="10rem" placeSelf="center" onClick={deleteReservedItemHandler}>
         삭제
       </Button>
@@ -66,4 +110,4 @@ const ReservationItem = ({ reservedItem }: ReservationItemProps) => {
   );
 };
 
-export default ReservationItem;
+export default React.memo(ReservationItem);

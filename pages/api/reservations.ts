@@ -29,11 +29,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (!existingData) {
-      data.push(parsedProducts);
+      const newProducts = { ...parsedProducts, quantity: 1 };
+      data.push(newProducts);
       fs.writeFileSync(filePath, JSON.stringify(data));
-      return res
-        .status(201)
-        .json({ message: "SUCCESS!", cart: parsedProducts });
+      return res.status(201).json({ message: "SUCCESS!", cart: newProducts });
     }
   }
 
@@ -57,6 +56,19 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     const filteredData = data.filter((item) => item.idx !== deletedId);
     fs.writeFileSync(filePath, JSON.stringify(filteredData));
     res.status(200).json({ cart: filteredData });
+  }
+
+  if (req.method === "PATCH") {
+    const { quantity, idx } = JSON.parse(req.body);
+
+    const filePath = buildCartPath();
+    const data = extractCart(filePath);
+
+    const filteredData = data.map((item) =>
+      item.idx === idx ? { ...item, quantity } : item,
+    );
+    fs.writeFileSync(filePath, JSON.stringify(filteredData));
+    return res.status(200).json({ cart: filteredData });
   }
 };
 

@@ -37,6 +37,8 @@ const ReservationsList = ({ data }: ReservationsListProps) => {
           mainImage: carts[key].mainImage,
           price: carts[key].price,
           spaceCategory: carts[key].spaceCategory,
+          maximumPurchases: carts[key].maximumPurchases,
+          quantity: carts[key].quantity,
         });
       }
       setReservationItems(revalidatedItems);
